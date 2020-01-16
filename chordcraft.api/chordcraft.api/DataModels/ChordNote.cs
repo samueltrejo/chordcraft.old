@@ -7,5 +7,9 @@ namespace chordcraft.api.DataModels
 {
     public class ChordNote
     {
+        public int Id { get; set; }
+        public int ChordId { get; set; }
+        public int NoteId { get; set; }
+        public int IsDeleted { get; set; }
     }
 }
