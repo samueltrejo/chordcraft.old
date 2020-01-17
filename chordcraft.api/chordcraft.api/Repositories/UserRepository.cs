@@ -42,5 +42,36 @@ namespace chordcraft.api.Repositories
                 return db.Execute(sql, parameters) == 1;
             }
         }
+
+        public User PostUser(User newUser)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"insert into [User] ([FirebaseUid], [Username], [Email], [], [Country], [Avatar], [Bio])
+                            values (@FirebaseUid, @Username, @Email, @Name, @Country, @Avatar, @Bio)
+                            output inserted.*";
+                var user = db.QueryFirstOrDefault<User>(sql, newUser);
+                return user;
+            }
+        }
+
+        public User UpdateUser(User updatedUser)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"update [User]
+                            set [Username] = @Username,
+	                            [Email] = @Email,
+	                            [Name] = @Name,
+	                            [Country] = @Country,
+	                            [Avatar] = @Avatar,
+	                            [Bio] = @Bio
+                             output inserted.*
+                             where Id = @Id";
+
+                var user = db.QueryFirstOrDefault<User>(sql, updatedUser);
+                return user;
+            }
+        }
     }
 }

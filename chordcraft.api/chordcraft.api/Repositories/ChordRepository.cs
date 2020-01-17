@@ -42,5 +42,32 @@ namespace chordcraft.api.Repositories
                 return db.Execute(sql, parameters) == 1;
             }
         }
+
+        public Chord PostChord(Chord newChord)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"insert into [Chord] ([RootNoteId], [SongId], [Quality])
+                            values (@RootNoteId, @SongId, @Quality)
+                            output inserted.*";
+                var chord = db.QueryFirstOrDefault<Chord>(sql, newChord);
+                return chord;
+            }
+        }
+
+        public Chord UpdateChord(Chord updatedChord)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"update [Chord]
+                            set [RootNoteId] = @RootNoteId,
+                                [Quality] = @Quality
+                             output inserted.*
+                             where Id = @Id";
+
+                var chord = db.QueryFirstOrDefault<Chord>(sql, updatedChord);
+                return chord;
+            }
+        }
     }
 }

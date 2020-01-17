@@ -42,5 +42,32 @@ namespace chordcraft.api.Repositories
                 return db.Execute(sql, parameters) == 1;
             }
         }
+
+        public ChordNote PostChordNote(ChordNote newChordNote)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"insert into [ChordNote] ([ChordId], [NoteId])
+                            values (@ChordId, @NoteId)
+                            output inserted.*";
+                var chordNote = db.QueryFirstOrDefault<ChordNote>(sql, newChordNote);
+                return chordNote;
+            }
+        }
+
+        //public ChordNote UpdateChordNote(ChordNote updatedChordNote)
+        //{
+        //    using (var db = new SqlConnection(_connectionString))
+        //    {
+        //        var sql = @"update [ChordNote]
+        //                    set [ChordId] = @ChordId,
+	       //                     [NoteId] = @NoteId
+        //                     output inserted.*
+        //                     where Id = @Id";
+
+        //        var chordNote = db.QueryFirstOrDefault<ChordNote>(sql, updatedChordNote);
+        //        return chordNote;
+        //    }
+        //}
     }
 }

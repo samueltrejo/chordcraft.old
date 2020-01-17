@@ -33,14 +33,6 @@ namespace chordcraft.api.Repositories
             }
         }
 
-        public bool DeleteNote(int id)
-        {
-            using (var db = new SqlConnection(_connectionString))
-            {
-                var sql = "update [Note] set [IsDeleted] = 1 where [Id] = @id";
-                var parameters = new { id };
-                return db.Execute(sql, parameters) == 1;
-            }
-        }
+        // Note does not have Create, Update, or Delete
     }
 }

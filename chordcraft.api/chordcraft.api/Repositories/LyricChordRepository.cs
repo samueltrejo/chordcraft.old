@@ -42,5 +42,36 @@ namespace chordcraft.api.Repositories
                 return db.Execute(sql, parameters) == 1;
             }
         }
+
+        public LyricChord PostLyricChord(LyricChord newLyricChord)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"insert into [LyricChord] ([Indentation], [LyricId], [ChordId])
+                            values (@Indentation, @LyricId, @ChordId)
+                            output inserted.*";
+                var lyricChord = db.QueryFirstOrDefault<LyricChord>(sql, newLyricChord);
+                return lyricChord;
+            }
+        }
+
+        //public LyricChord UpdateLyricChord(LyricChord updatedLyricChord)
+        //{
+        //    using (var db = new SqlConnection(_connectionString))
+        //    {
+        //        var sql = @"update [LyricChord]
+        //                    set [LyricChordname] = @LyricChordname,
+	       //                     [Email] = @Email,
+	       //                     [Name] = @Name,
+	       //                     [Country] = @Country,
+	       //                     [Avatar] = @Avatar,
+	       //                     [Bio] = @Bio
+        //                     output inserted.*
+        //                     where Id = @Id";
+
+        //        var lyricChord = db.QueryFirstOrDefault<LyricChord>(sql, updatedLyricChord);
+        //        return lyricChord;
+        //    }
+        //}
     }
 }
