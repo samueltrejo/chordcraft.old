@@ -5,12 +5,18 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace chordcraft.api.Repositories
 {
     public class UserRepository
     {
-        string _connectionString = "Server=localhost;Database=ChordCraft;Trusted_Connection=True;";
+        string _connectionString;
+
+        public UserRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetValue<string>("ConnectionString");
+        }
 
         public IEnumerable<User> GetUsers()
         {

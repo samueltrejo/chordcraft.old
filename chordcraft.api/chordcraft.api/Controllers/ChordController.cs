@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace chordcraft.api.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class ChordController : Controller
     {
         public IActionResult Index()
