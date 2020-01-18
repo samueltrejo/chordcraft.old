@@ -54,8 +54,7 @@ namespace chordcraft.api.Repositories
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"insert into [Lyric] ([Verse], [SongId])
-                            values (@Verse, @SongId)
-                            output inserted.*";
+                            output inserted.* values (@Verse, @SongId)";
                 var lyric = db.QueryFirstOrDefault<Lyric>(sql, newLyric);
                 return lyric;
             }

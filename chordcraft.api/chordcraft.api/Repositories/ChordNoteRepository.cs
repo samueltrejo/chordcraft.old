@@ -54,8 +54,7 @@ namespace chordcraft.api.Repositories
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"insert into [ChordNote] ([ChordId], [NoteId])
-                            values (@ChordId, @NoteId)
-                            output inserted.*";
+                            output inserted.* values (@ChordId, @NoteId)";
                 var chordNote = db.QueryFirstOrDefault<ChordNote>(sql, newChordNote);
                 return chordNote;
             }
