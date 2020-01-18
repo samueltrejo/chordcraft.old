@@ -36,7 +36,7 @@ create table [dbo].[User]
 	[Id] int identity(1,1) not null primary key,
 	[FirebaseUid] nvarchar(255) not null,
 	[Username] nvarchar(255) not null,
-	[Email] nvarchar(255),
+	[Email] nvarchar(255) not null,
 	[Name] nvarchar (255),
 	[Country] nvarchar (255),
 	[Avatar] nvarchar (255),
@@ -69,6 +69,7 @@ create table [dbo].[Song]
 	[Name] nvarchar(255) not null,
 	[Artist] nvarchar(255),
 	[Genre] nvarchar(255),
+	[Transposition] int,
 	[DateAdded] datetime2 not null default getdate(),
     [OwnerId] int not null
 		foreign key (OwnerId)
