@@ -69,6 +69,7 @@ create table [dbo].[Song]
 	[Name] nvarchar(255) not null,
 	[Artist] nvarchar(255),
 	[Genre] nvarchar(255),
+	[Transposition] int,
 	[DateAdded] datetime2 not null default getdate(),
     [OwnerId] int not null
 		foreign key (OwnerId)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using chordcraft.api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,13 @@ namespace chordcraft.api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddTransient(provider => new SqlConnection(connectionString));
+            services.AddScoped<UserRepository>();
+            services.AddScoped<SongRepository>();
+            services.AddScoped<NoteRepository>();
+            services.AddScoped<LyricRepository>();
+            services.AddScoped<LyricChordRepository>();
+            services.AddScoped<ChordRepository>();
+            services.AddScoped<ChordNoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
