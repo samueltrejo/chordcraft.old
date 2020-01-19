@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <div className="profile">
       <Navigation />
-      <div className="container">profile</div>
+      <div className="container mt-5">profile</div>
     </div>
   )
 };

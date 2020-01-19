@@ -6,7 +6,7 @@ const NotFound = (props) => {
   return (
     <div className="not-found">
       <Navigation />
-      <div className="container">404 page not found</div>
+      <div className="container mt-5">404 page not found</div>
     </div>
   )
 };
