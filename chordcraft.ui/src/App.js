@@ -6,6 +6,10 @@ import {
   Switch,
 } from 'react-router-dom';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseInit from './requests/firebase-init';
+
 import Home from './components/home';
 // import HomePublic from './components/home-public';
 import Profile from './components/profile';
@@ -31,11 +35,20 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
+firebaseInit();
+
 
 function App() {
   const [authed, setAuthed] = useState(false);
 
-  useEffect(() => setAuthed(true), []);
+  useEffect(() => {
+    const removeListener = firebase.auth()
+      .onAuthStateChanged((user) => {
+        if (user) setAuthed(true);
+        else setAuthed(false)
+      });
+    return () => removeListener();
+  }, []);
 
   return (
     <div className="app">
