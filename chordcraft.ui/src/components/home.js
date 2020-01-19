@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Navigation from './nav';
+
 const Home = (props) => {
-  console.error(props.authed);
   return (
     <div className="home">
-      home
+      <Navigation />
+      <div className="container">home</div>
     </div>
   )
 };

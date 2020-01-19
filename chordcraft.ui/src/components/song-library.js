@@ -1,9 +1,12 @@
 import React from 'react';
 
+import Navigation from './nav';
+
 const SongLibrary = () => {
   return (
     <div className="song-library">
-      song library
+      <Navigation />
+      <div className="container">song library</div>
     </div>
   )
 };

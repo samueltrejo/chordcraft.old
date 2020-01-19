@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Navigation from './nav';
+
 const NotFound = (props) => {
-  console.error(props.authed);
   return (
     <div className="not-found">
-      404 page not found
+      <Navigation />
+      <div className="container">404 page not found</div>
     </div>
   )
 };
