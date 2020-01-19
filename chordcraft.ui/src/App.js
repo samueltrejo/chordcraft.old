@@ -10,8 +10,9 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseInit from './requests/firebase-init';
 
-import Home from './components/home';
 // import HomePublic from './components/home-public';
+import Home from './components/home';
+import LoginOptions from './components/login-options';
 import Profile from './components/profile';
 import Song from './components/song';
 import SongLibrary from './components/song-library';
@@ -55,6 +56,7 @@ function App() {
       <Router>
         <Switch>
           <PublicRoute path="/auth" component={Home} authed={authed} />
+          <PublicRoute path="/login-options" component={LoginOptions} authed={authed} />
           <PrivateRoute path="/profile" component={Profile} authed={authed} />
           <PrivateRoute path="/song" component={Song} authed={authed} />
           <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} />

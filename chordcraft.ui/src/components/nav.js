@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 
 import {
   Collapse,
-  Dropdown,
+  // Dropdown,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -15,44 +15,47 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
+  // NavbarText
 } from 'reactstrap';
 
-const Navigation = () => {
+const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const loginOptions = props.authed
+    ? (<UncontrolledDropdown nav inNavbar>
+      <DropdownToggle nav caret>
+        Account
+      </DropdownToggle>
+      <DropdownMenu style={{background: 'linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5))'}} right>
+        <DropdownItem tag={RouteLink} to="/profile">
+          Profile
+        </DropdownItem>
+        <DropdownItem tag={RouteLink} to="/my-songs">
+          Songs
+        </DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem>
+          Logout
+        </DropdownItem>
+      </DropdownMenu>
+    </UncontrolledDropdown>) : (<NavItem><NavLink tag={RouteLink} to="/login-options">Login</NavLink></NavItem>);
+
   return (
     <div className="navigation fixed-top">
       <Navbar className="container w-100" color="transparent" dark expand="md">
-        <NavbarBrand className="brand position-fixed" tag={RouteLink} to="/"><div className="display-4">Chordcraft</div></NavbarBrand>
+        <NavbarBrand className="brand lead" tag={RouteLink} to="/"><div className="display-4">Chordcraft</div></NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto lead" navbar>
             <NavItem>
-              <NavLink tag={RouteLink} to="/song">+Song</NavLink>
+              <NavLink tag={RouteLink} to={props.authed ? ("/song") : ("/login-options")}>+Song</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={RouteLink} to="/song-library">Song Library</NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Account
-              </DropdownToggle>
-              <DropdownMenu style={{background: 'linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5))'}} right>
-                <DropdownItem tag={RouteLink} to="/profile">
-                  Profile
-                </DropdownItem>
-                <DropdownItem tag={RouteLink} to="/my-songs">
-                  Songs
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            {loginOptions}
           </Nav>
           {/* <NavbarText>Simple Text</NavbarText> */}
         </Collapse>
