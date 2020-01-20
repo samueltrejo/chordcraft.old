@@ -2,10 +2,10 @@ import React from 'react';
 
 import Navigation from './nav';
 
-const Profile = () => {
+const Profile = (props) => {
   return (
     <div className="profile">
-      <Navigation />
+      <Navigation authed={props.authed} />
       <div className="container mt-5">profile</div>
     </div>
   )

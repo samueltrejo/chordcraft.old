@@ -1,12 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Dancing+Script|Devonshire&display=swap');
 
 body {
-  background-image: -webkit-linear-gradient(0deg, #F78181 40px, #BEF781 40px, #BEF781 70px,#58ACFA 70px, #58ACFA 100px, #9b59b6 100px,#9b59b6 130px,#BDBDBD 130px,#BDBDBD 160px,#F3F781 160px,#F3F781 190px,#58FAD0 190px,#58FAD0 220px,#FE642E 220px,#FE642E 250px,#DA81F5 250px,#DA81F5 280px,#886A08 280px,#886A08 310px,#088A29 310px,#088A29 340px);
-  background-size: 340px;
+  // background-image: -webkit-linear-gradient(0deg, #F78181 40px, #BEF781 40px, #BEF781 70px,#58ACFA 70px, #58ACFA 100px, #9b59b6 100px,#9b59b6 130px,#BDBDBD 130px,#BDBDBD 160px,#F3F781 160px,#F3F781 190px,#58FAD0 190px,#58FAD0 220px,#FE642E 220px,#FE642E 250px,#DA81F5 250px,#DA81F5 280px,#886A08 280px,#886A08 310px,#088A29 310px,#088A29 340px);
+  // background-size: 340px;
+  background-image: url('../assets/oscar-keys-ojVMh1QTVGY-unsplash.jpg');
+  // backdrop-filter: blur(8px);
+
+  .mt-6 {
+    margin-top: 9rem;
+  }
 
   .navigation {
     font-family: 'Dancing Script', cursive;
-    background-color: rgba($color: #000000, $alpha: 0.5);
+    // background-color: rgba($color: #000000, $alpha: 0.5);
 
     .brand {
       font-family: 'Devonshire', cursive;
@@ -17,5 +23,17 @@ body {
 .home {
   .jumbotron {
     font-family: 'Dancing Script', cursive;
+  }
+}
+
+.login-options {
+  .jumbotron {
+    font-family: 'Dancing Script', cursive;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+
+  .jumbotron:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
 }
