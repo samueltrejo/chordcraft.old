@@ -27,10 +27,17 @@ namespace chordcraft.api.Controllers
         }
 
         // get user/id
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public User GetUser(int id)
         {
             return _repo.GetUser(id);
+        }
+
+        // get user/uid
+        [HttpGet("{uid}")]
+        public User GetUser(string uid)
+        {
+            return _repo.GetUser(uid);
         }
 
         // post user

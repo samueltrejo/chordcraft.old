@@ -31,6 +31,13 @@ namespace chordcraft.api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddCors(o => o.AddPolicy("OpenPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddTransient(provider => new SqlConnection(connectionString));
             services.AddScoped<UserRepository>();
             services.AddScoped<SongRepository>();
@@ -54,6 +61,7 @@ namespace chordcraft.api
                 app.UseHsts();
             }
 
+            app.UseCors("OpenPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

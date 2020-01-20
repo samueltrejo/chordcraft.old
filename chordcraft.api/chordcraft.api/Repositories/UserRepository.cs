@@ -39,6 +39,17 @@ namespace chordcraft.api.Repositories
             }
         }
 
+        public User GetUser(string uid)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = "select * from [User] where [FirebaseUid] = @uid";
+                var parameters = new { uid };
+                var user = db.QueryFirstOrDefault<User>(sql, parameters);
+                return user;
+            }
+        }
+
         public bool DeleteUser(int id)
         {
             using (var db = new SqlConnection(_connectionString))
