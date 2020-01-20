@@ -26,7 +26,9 @@ const Navigation = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   const logoutClickEvent = () => {
-    authRequests.logoutUser();
+    authRequests.logoutUser()
+      .then(() => console.error())
+      .catch(error => console.error(error));
   }
 
   const loginOptions = props.authed
