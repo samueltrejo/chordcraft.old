@@ -10,7 +10,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseInit from './requests/firebase-init';
 
-// import HomePublic from './components/home-public';
+import userData from './data/user-data';
+
 import Home from './components/home';
 import LoginOptions from './components/login-options';
 import Profile from './components/profile';
@@ -41,14 +42,26 @@ firebaseInit();
 
 function App() {
   const [authed, setAuthed] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    if (authed) userData.getByUid()
+      .then(response => {
+        if (response.data) setProfile(response.data);
+        else userData.register();
+      })
+      .catch();
+  }, [authed]);
 
   useEffect(() => {
     const removeListener = firebase.auth()
       .onAuthStateChanged((user) => {
         if (user) setAuthed(true);
-        else setAuthed(false)
+        else setAuthed(false); setProfile(null);
       });
-    return () => removeListener();
+    return () => {
+      removeListener();
+    };
   }, []);
 
   return (
@@ -63,7 +76,7 @@ function App() {
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} />
           <PublicRoute path="/song" component={Song} authed={authed} />
           <PublicRoute path="/song-library" component={SongLibrary} authed={authed} />
-          <PrivateRoute path="/" component={Home} authed={authed} />
+          <PrivateRoute path="/" component={Home} authed={authed} profile={profile} />
           <Route component={NotFound} />
         </Switch>
       </Router>

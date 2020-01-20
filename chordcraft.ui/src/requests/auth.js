@@ -22,6 +22,9 @@ const loginGoogle = () => {
     cred.user.getIdToken()
         //save the token to the session storage
       .then(token => sessionStorage.setItem('token',token));
+
+    //register user
+    // registerUser();
   });
 };
 

@@ -26,13 +26,15 @@ const Navigation = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   const logoutClickEvent = () => {
-    authRequests.logoutUser();
+    authRequests.logoutUser()
+      .then(() => console.error())
+      .catch(error => console.error(error));
   }
 
-  const loginOptions = props.authed
+  const loginOptions = props.authed && props.profile
     ? (<UncontrolledDropdown nav inNavbar>
       <DropdownToggle nav caret>
-        Account
+        {props.profile.username ? (props.profile.username) : (props.profile.email)}
       </DropdownToggle>
       <DropdownMenu style={{background: 'linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5))'}} right>
         <DropdownItem tag={RouteLink} to="/profile">

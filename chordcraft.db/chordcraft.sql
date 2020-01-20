@@ -51,7 +51,7 @@ insert into [dbo].[User]
  [FirebaseUid], [Username], [Email], [Country], [Bio]
 )
 values
-('001', 'To0ns', 'trejomsamuel@gmail.com', 'US', 'I like space!'),
+('CyeosVZLLwQdhxtozRJ7s0Bq5wD3', 'To0ns', 'trejomsamuel@gmail.com', 'US', 'I like space!'),
 ('002', 'BlindZniper', 'isaactrejo@gmail.com', 'US', 'I like dinosaurs!'),
 ('003', 'LilMrD', 'davidtrejo@gmail.com', 'US', 'I like music!'),
 ('004', 'DryestOmnivore', 'danielmunoz@gmail.com', 'US', 'I like Fallout!')
