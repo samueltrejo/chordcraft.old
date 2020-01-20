@@ -5,7 +5,7 @@ import Navigation from './nav';
 const NotFound = (props) => {
   return (
     <div className="not-found">
-      <Navigation />
+      <Navigation authed={props.authed} />
       <div className="container mt-5">404 page not found</div>
     </div>
   )

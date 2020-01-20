@@ -2,10 +2,10 @@ import React from 'react';
 
 import Navigation from './nav';
 
-const SongLibrary = () => {
+const SongLibrary = (props) => {
   return (
     <div className="song-library">
-      <Navigation />
+      <Navigation authed={props.authed} />
       <div className="container mt-5">song library</div>
     </div>
   )

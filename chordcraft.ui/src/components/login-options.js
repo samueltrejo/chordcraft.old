@@ -3,20 +3,28 @@ import { Button, Form, FormGroup, Input, Jumbotron, Label } from 'reactstrap';
 
 import Navigation from './nav';
 
+import authRequests from '../requests/auth';
+
 import loginImg from '../assets/austin-distel-VCFxt2yT1eQ-unsplash.jpg'
 
-const LoginOptions = () => {
+const LoginOptions = (props) => {
+  const loginClickEvent = (request) => {
+    authRequests[request]()
+      .then(() => props.history.push('/'))
+      .catch(error => console.error(error));
+  }
+
   return (
     <div className="login-options">
-      <Navigation />
+      <Navigation authed={props.authed} />
       <div className="container mt-6">
         <Jumbotron className="row w-100 p-0 mx-0 bg-light">
             <div className="col-6 p-5">
               <h1 className="text-center">Welcome!</h1>
-              <div className="lead">In order to start creating, please login to your account.</div>
+              <div className="lead text-center">In order to start creating, please login to your account.</div>
               <div className="row mt-3">
-                <div className="col-6 px-3"><button className="btn btn-dark w-100">Google</button></div>
-                <div className="col-6 px-3"><button className="btn btn-dark w-100">Facebook</button></div>
+                <div className="col-6 px-3"><Button className="w-100" color="dark" onClick={loginClickEvent.bind(null, 'loginGoogle')}>Google</Button></div>
+                <div className="col-6 px-3"><Button className="w-100" color="dark">Facebook</Button></div>
               </div>
               <div className="lead text-center mt-3">-Or-</div>
               <Form>

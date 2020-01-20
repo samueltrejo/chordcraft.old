@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink as RouteLink } from "react-router-dom";
 import { withRouter } from "react-router";
 
+import authRequests from '../requests/auth';
+
 import {
   Collapse,
   // Dropdown,
@@ -23,6 +25,10 @@ const Navigation = (props) => {
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const logoutClickEvent = () => {
+    authRequests.logoutUser();
+  }
+
   const loginOptions = props.authed
     ? (<UncontrolledDropdown nav inNavbar>
       <DropdownToggle nav caret>
@@ -36,7 +42,7 @@ const Navigation = (props) => {
           Songs
         </DropdownItem>
         <DropdownItem divider />
-        <DropdownItem>
+        <DropdownItem onClick={logoutClickEvent}>
           Logout
         </DropdownItem>
       </DropdownMenu>
