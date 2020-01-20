@@ -23,7 +23,7 @@ const registerUser = (cred) => {
       let user;
       if (!response.data) user = {  email: cred.user.email }
       else user = response.data;
-      console.error(user);
+      userData.register(user);
     })
     .catch(error => console.error(error));
 };
