@@ -10,7 +10,7 @@ namespace chordcraft.api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : FirebaseEnabledController
     {
         readonly UserRepository _repo;
 
@@ -44,6 +44,8 @@ namespace chordcraft.api.Controllers
         [HttpPost]
         public User PostUser(User newUser)
         {
+            newUser.FirebaseUid = FirebaseId;
+            newUser.Email = FirebaseEmail;
             return _repo.PostUser(newUser);
         }
 

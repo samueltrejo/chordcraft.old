@@ -20,10 +20,8 @@ const registerUser = (cred) => {
   //check if user exists
   userData.getByUid(cred.user.uid)
     .then(response => {
-      let user;
-      if (!response.data) user = {  email: cred.user.email }
-      else user = response.data;
-      userData.register(user);
+      if (!response.data) userData.register();
+      else console.error(response.data);
     })
     .catch(error => console.error(error));
 };
