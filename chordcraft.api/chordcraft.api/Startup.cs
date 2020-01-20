@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using chordcraft.api.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace chordcraft.api
 {
@@ -38,6 +40,20 @@ namespace chordcraft.api
                        .AllowAnyHeader();
             }));
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.IncludeErrorDetails = true;
+                options.Authority = "https://securetoken.google.com/chordcraft";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "https://securetoken.google.com/chordcraft",
+                    ValidateAudience = true,
+                    ValidAudience = "chordcraft",
+                    ValidateLifetime = true
+                };
+            });
+
             services.AddTransient(provider => new SqlConnection(connectionString));
             services.AddScoped<UserRepository>();
             services.AddScoped<SongRepository>();
@@ -62,6 +78,7 @@ namespace chordcraft.api
             }
 
             app.UseCors("OpenPolicy");
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
