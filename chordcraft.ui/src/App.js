@@ -45,7 +45,6 @@ function App() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    console.error('test');
     if (authed) userData.getByUid(firebase.auth().currentUser.uid)
       .then(user => {
         if (user) setProfile(user);

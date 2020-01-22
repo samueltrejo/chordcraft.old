@@ -3,6 +3,8 @@ import { Jumbotron } from 'reactstrap';
 
 import songData from '../data/song-data';
 
+import SongCard from './song-card';
+
 import bandImg from '../assets/hans-vivek-By96LAr-34o-unsplash.jpg';
 
 import Navigation from './nav';
@@ -16,7 +18,11 @@ const SongLibrary = (props) => {
       .catch(error => console.error(error));
   }, []);
 
-  console.error(songs);
+  const buildLibrary = () => {
+    return songs.map(song => (
+      <SongCard song={song} />
+    ));
+  }
 
   return (
     <div className="song-library">
@@ -35,6 +41,7 @@ const SongLibrary = (props) => {
           </div>
           <div className="col-9">
             <div className="lead">Sort By</div>
+            <div>{buildLibrary()}</div>
           </div>
         </div>
       </div>
