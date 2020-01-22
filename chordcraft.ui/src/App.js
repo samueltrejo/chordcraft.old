@@ -45,13 +45,14 @@ function App() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
+    console.error('test');
     if (authed) userData.getByUid(firebase.auth().currentUser.uid)
       .then(user => {
         if (user) setProfile(user);
         else userData.register().then(user => setProfile(user));
       })
       .catch(error => console.error(error));
-  }, [authed, profile]);
+  }, [authed]);
 
   useEffect(() => {
     const removeListener = firebase.auth()

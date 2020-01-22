@@ -9,7 +9,7 @@ const getByUid = (uid) => new Promise((resolve, reject) => {
 })
 const register = () => new Promise((resolve, reject) => {
   axios.post(baseUrl)
-    .then(response => resolve(response))
+    .then(response => resolve(response.data))
     .catch(error => reject(error));
 })
 

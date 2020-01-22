@@ -9,6 +9,7 @@ import Navigation from './nav';
 const Home = (props) => {
   return (
     <div className="home vh-100">
+      {console.error('test')}
       <Navigation authed={props.authed} profile={props.profile} />
       <Jumbotron className="h-75 rounded-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${instrumentsImg})`,
         backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
