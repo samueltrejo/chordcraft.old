@@ -45,10 +45,10 @@ function App() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    if (authed) userData.getByUid()
-      .then(response => {
-        if (response.data) setProfile(response.data);
-        else userData.register().then(response => setProfile(response));
+    if (authed) userData.getByUid(firebase.auth().currentUser.uid)
+      .then(user => {
+        if (user) setProfile(user);
+        else userData.register().then(user => setProfile(user));
       })
       .catch(error => console.error(error));
   }, [authed, profile]);
@@ -68,14 +68,14 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <PublicRoute path="/auth" component={Home} authed={authed} />
-          <PublicRoute path="/login-options" component={LoginOptions} authed={authed} />
-          <PrivateRoute path="/profile" component={Profile} authed={authed} />
-          <PrivateRoute path="/song" component={Song} authed={authed} />
-          <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} />
-          <PrivateRoute path="/my-songs" component={MySongs} authed={authed} />
-          <PublicRoute path="/song" component={Song} authed={authed} />
-          <PublicRoute path="/song-library" component={SongLibrary} authed={authed} />
+          <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
+          <PublicRoute path="/login-options" component={LoginOptions} authed={authed} profile={profile} />
+          <PrivateRoute path="/profile" component={Profile} authed={authed} profile={profile} />
+          <PrivateRoute path="/song" component={Song} authed={authed} profile={profile} />
+          <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
+          <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
+          <PublicRoute path="/song" component={Song} authed={authed} profile={profile} />
+          <PublicRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/" component={Home} authed={authed} profile={profile} />
           <Route component={NotFound} />
         </Switch>

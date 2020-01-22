@@ -16,7 +16,7 @@ const LoginOptions = (props) => {
 
   return (
     <div className="login-options">
-      <Navigation authed={props.authed} />
+      <Navigation authed={props.authed} profile={props.profile} />
       <div className="container mt-6">
         <Jumbotron className="row w-100 p-0 mx-0 bg-light">
             <div className="col-6 p-5">

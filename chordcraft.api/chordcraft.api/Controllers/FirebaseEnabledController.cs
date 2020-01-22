@@ -9,6 +9,6 @@ namespace chordcraft.api.Controllers
     public abstract class FirebaseEnabledController : ControllerBase
     {
         protected string FirebaseId => User.FindFirst(claim => claim.Type == "user_id").Value;
-        protected string FirebaseEmail => User.FindFirst(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+        protected string FirebaseEmail => User.FindFirst(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
     }
 }
