@@ -14,7 +14,7 @@ const SongCard = (props) => {
         <div className="col p-0 m-0">{props.song.artist}</div>
         <div className="col p-0 m-0">{props.song.genre}</div>
         <div className="col p-0 m-0">{dateAdded}</div>
-        <div className="col p-0 m-0">||||||||||||||||||||||</div>
+        <div className="col p-0 m-0">Views</div>
       </Card>
     </div>
   )

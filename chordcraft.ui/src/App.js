@@ -64,6 +64,11 @@ function App() {
     };
   }, []);
 
+  window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    document.querySelector('.navigation').style.background = `linear-gradient(rgba(0, 0, 0, ${currentScrollPos / 250}), rgba(0, 0, 0, ${currentScrollPos / 250}))`;
+  }
+
   return (
     <div className="app">
       <Router>
