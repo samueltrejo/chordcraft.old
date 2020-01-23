@@ -20,7 +20,7 @@ const SongLibrary = (props) => {
 
   const buildLibrary = () => {
     return songs.map(song => (
-      <SongCard song={song} />
+      <SongCard key={song.id} song={song} />
     ));
   }
 
