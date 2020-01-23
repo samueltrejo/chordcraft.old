@@ -8,6 +8,13 @@ const getSongs = () => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
+const getMySongs = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/uid`)
+    .then((response) => resolve(response.data))
+    .catch(error => reject(error));
+});
+
 export default {
   getSongs,
+  getMySongs,
 };

@@ -12,7 +12,7 @@ const MySongs = (props) => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    songData.getSongs()
+    songData.getMySongs()
       .then((songs) => setSongs(songs))
       .catch(error => console.error(error));
   }, []);

@@ -28,6 +28,17 @@ namespace chordcraft.api.Repositories
             }
         }
 
+        public IEnumerable<Song> GetSongs(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = "select * from [Song] where [IsDeleted] = 0 and [OwnerId] = @id";
+                var parameters = new { id };
+                var songs = db.Query<Song>(sql, parameters);
+                return songs;
+            }
+        }
+
         public Song GetSong(int id)
         {
             using (var db = new SqlConnection(_connectionString))
