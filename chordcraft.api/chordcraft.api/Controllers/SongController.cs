@@ -10,13 +10,15 @@ namespace chordcraft.api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class SongController : Controller
+    public class SongController : FirebaseEnabledController
     {
         readonly SongRepository _repo;
+        readonly UserRepository _userRepo;
 
-        public SongController(SongRepository repo)
+        public SongController(SongRepository repo, UserRepository userRepo)
         {
             _repo = repo;
+            _userRepo = userRepo;
         }
 
         // get song
@@ -24,6 +26,14 @@ namespace chordcraft.api.Controllers
         public IEnumerable<Song> GetSongs()
         {
             return _repo.GetSongs();
+        }
+
+        // get song/uid
+        [HttpGet("uid")]
+        public IEnumerable<Song> GetUserSongs()
+        {
+            User user = _userRepo.GetUser(FirebaseId);
+            return _repo.GetSongs(user.Id);
         }
 
         // get song/id

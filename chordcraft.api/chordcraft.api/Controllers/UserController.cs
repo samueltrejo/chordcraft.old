@@ -34,10 +34,10 @@ namespace chordcraft.api.Controllers
         }
 
         // get user/uid
-        [HttpGet("uid")]
-        public User GetUser()
+        [HttpGet("{uid}")]
+        public User GetUser(string uid)
         {
-            return _repo.GetUser(FirebaseId);
+            return _repo.GetUser(uid);
         }
 
         // post user
