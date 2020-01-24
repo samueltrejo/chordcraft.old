@@ -18,9 +18,13 @@ const SongLibrary = (props) => {
       .catch(error => console.error(error));
   }, []);
 
+  const toSongDetails = (songId) => {
+    props.history.push(`/song/${songId}`);
+  }
+
   const buildLibrary = () => {
     return songs.map(song => (
-      <SongCard key={song.id} song={song} />
+      <SongCard key={song.id} song={song} toSongDetails={toSongDetails} />
     ));
   }
 

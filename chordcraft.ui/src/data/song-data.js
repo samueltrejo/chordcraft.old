@@ -14,7 +14,14 @@ const getMySongs = () => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
+const getSong = (songId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/${songId}`)
+    .then(response => resolve(response.data))
+    .catch(error => reject(error));
+})
+
 export default {
   getSongs,
   getMySongs,
+  getSong,
 };
