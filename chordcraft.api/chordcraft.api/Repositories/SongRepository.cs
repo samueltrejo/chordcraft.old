@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using chordcraft.api.DataTransferObject;
 
 namespace chordcraft.api.Repositories
 {
@@ -49,20 +48,6 @@ namespace chordcraft.api.Repositories
                 var sql = "select * from [Song] where [Id] = @id";
                 var parameters = new { id };
                 var song = db.QueryFirstOrDefault<Song>(sql, parameters);
-                return song;
-            }
-        }
-
-        public SongWithLyricsAndChords GetSongWithLyricsAndChords(int id)
-        {
-            using (var db = new SqlConnection(_connectionString))
-            {
-                var sql = "select * from [Song] where [Id] = @id";
-                var parameters = new { id };
-                var song = db.QueryFirstOrDefault<SongWithLyricsAndChords>(sql, parameters);
-
-                var lyrics = new LyricRepository(_configuration).GetLyricsWithChords(song.Id);
-                song.Lyrics = lyrics;
                 return song;
             }
         }
