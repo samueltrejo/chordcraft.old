@@ -29,7 +29,7 @@ const SongLibrary = (props) => {
   }
 
   return (
-    <div className="song-library vh-100">
+    <div className="song-library pb-5">
       <Navigation authed={props.authed} profile={props.profile} />
       <Jumbotron className="rounded-0 mb-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bandImg})`,
         backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
@@ -49,6 +49,11 @@ const SongLibrary = (props) => {
           </div>
         </div>
       </div>
+      <footer className="footer position-absolute w-100 bg-light text-center">
+        <div class="container">
+          <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+      </footer>
     </div>
   )
 };
