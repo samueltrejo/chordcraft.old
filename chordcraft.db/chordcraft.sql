@@ -71,6 +71,7 @@ create table [dbo].[Song]
 	[Genre] nvarchar(255),
 	[Transposition] int,
 	[DateAdded] datetime2 not null default getdate(),
+	[Lyrics] nvarchar(8191),
     [OwnerId] int not null
 		foreign key (OwnerId)
 		references [User] (Id),

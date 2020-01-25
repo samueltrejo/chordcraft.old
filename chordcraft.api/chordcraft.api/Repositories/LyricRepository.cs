@@ -6,15 +6,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using chordcraft.api.DataTransferObject;
 
 namespace chordcraft.api.Repositories
 {
     public class LyricRepository
     {
         string _connectionString;
+        IConfiguration _configuration;
 
         public LyricRepository(IConfiguration configuration)
         {
+            _configuration = configuration;
             _connectionString = configuration.GetValue<string>("ConnectionString");
         }
 
@@ -24,6 +27,24 @@ namespace chordcraft.api.Repositories
             {
                 var sql = "select * from [Lyric] where [IsDeleted] = 0";
                 var lyrics = db.Query<Lyric>(sql);
+                return lyrics;
+            }
+        }
+
+        public IEnumerable<LyricWithChords> GetLyricsWithChords(int songId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = "select * from [Lyric] where [IsDeleted] = 0 and [SongId] = @songId";
+                var parameters = new { songId };
+                var lyrics = db.Query<LyricWithChords>(sql, parameters);
+
+                foreach (var lyric in lyrics)
+                {
+                    var chords = new ChordRepository(_configuration).GetRichChords(lyric.Id);
+                    lyric.Chords = chords;
+                }
+
                 return lyrics;
             }
         }
