@@ -131,7 +131,7 @@ const Song = (props) => {
               {/* <div className="lead">{song.name}</div> */}
             </div>
           </div>
-          <div className="col-9 h-100">
+          <div className="col-9 h-100 overflow-auto">
             {buildSongLyrics()}
             {/* <div className="lead">{songLyrics}</div> */}
           </div>

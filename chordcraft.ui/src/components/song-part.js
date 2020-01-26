@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Chord from './chord';
+
 const SongPart = (props) => {
   const buildSongPart = () => {
     let songLine = props.lyric;
@@ -46,7 +48,7 @@ const SongPart = (props) => {
           songLine = songLine.slice(bracketPos);
         } else if (songLine.indexOf('[') === 0) {
           const sndBracketPos = songLine.indexOf(']');
-          chordCells.push(<td>{songLine.slice(1, sndBracketPos)}</td>);
+          chordCells.push(<Chord chord={songLine.slice(1, sndBracketPos)} />);
           songLine = songLine.slice(sndBracketPos + 1);
 
           const nextBracketPos = songLine.indexOf('[');
