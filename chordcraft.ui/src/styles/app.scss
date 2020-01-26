@@ -59,6 +59,14 @@
     outline: none;
     background-color: whitesmoke;
   }
+
+  .single-song {
+    min-height: 450px;
+  }
+
+  pre {
+    overflow: unset;
+  }
 }
 
 .song-card {

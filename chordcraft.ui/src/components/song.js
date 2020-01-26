@@ -61,7 +61,11 @@ Can we get b[G]ack to the way it was?`;
 
 const Song = (props) => {
   const [song, setSong] = useState(defaultSong);
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
+
+  const toggleEdit = () => {
+    setEdit(!edit);
+  }
 
   const saveSong = () => {
     // console.error(song);
@@ -104,12 +108,18 @@ const Song = (props) => {
           <Button type="submit" color="dark">Save</Button>
         </FormGroup>
       </Form>
-    ) : (<div></div>);
+    ) : (
+      <div className="lead">
+        <div className="pb-3">{song.name}</div>
+        <div className="pb-3">{song.artist}</div>
+        <div className="pb-3">{song.genre}</div>
+        <Button color="dark" onClick={toggleEdit}>Edit Song</Button>
+      </div>);
   }
 
   const buildSongLyrics = () => {
     if (edit) {
-      return <textarea className="song-textarea w-100 h-100" type="textarea" placeholder="type song here" value={SeedLyrics} onChange={() => {}} />
+      return <textarea className="song-textarea w-100 h-100 p-0" type="textarea" placeholder="type song here" value={SeedLyrics} onChange={() => {}} />
     } else {
       const songLyrics = SeedLyrics.split('\n');
       return songLyrics.map((lyric, index) => (
@@ -123,17 +133,13 @@ const Song = (props) => {
   return (
     <div className="song vh-100 pt-6 pb-5">
       <Navigation authed={props.authed} profile={props.profile} />
-      <div className="container card rounded-0 h-100">
+      <div className="single-song container card rounded-0 h-100">
         <div className="row p-3 h-100">
           <div className="col-3">
-            <div className="pb-3">
-              {buildSongDetails()}
-              {/* <div className="lead">{song.name}</div> */}
-            </div>
+            {buildSongDetails()}
           </div>
-          <div className="col-9 h-100 overflow-auto">
+          <div className={edit ? ('col-9 h-100') : ('col-9 h-100 overflow-auto')}>
             {buildSongLyrics()}
-            {/* <div className="lead">{songLyrics}</div> */}
           </div>
         </div>
       </div>
