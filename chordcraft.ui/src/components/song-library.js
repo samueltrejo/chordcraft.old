@@ -50,8 +50,8 @@ const SongLibrary = (props) => {
         </div>
       </div>
       <footer className="footer position-absolute w-100 bg-light text-center">
-        <div class="container">
-          <span class="text-muted">Place sticky footer content here.</span>
+        <div className="container">
+          <span className="text-muted">Place sticky footer content here.</span>
         </div>
       </footer>
     </div>

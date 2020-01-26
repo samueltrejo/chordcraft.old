@@ -10,6 +10,33 @@ import {
 import songData from '../data/song-data';
 
 import Navigation from './nav';
+import SongPart from './song-part';
+
+const defaultSong = {
+  name: '',
+  artist: '',
+  genre: '',
+  lyrics: `[D]I looked in my rear view mirror [Am]and
+  It seemed to make a lot more s[Em]ense
+  Than what I see ah[G]ead of us, ahead of us, yeah.
+  [D]I'm ready to make that t[Am]urn
+  Before we both crash and b[Em]urn
+  Cause that could be the d[G]eath of us, the death of us, baby
+  [Pre-Chorus]
+  [D]You know how to drive in rain
+  And [Am]you decided not to make a ch[Em]ange
+  Stuck in the same old lane
+  G[G]oing the wrong way home
+  [Chorus]
+  I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,
+  I'm under pressure
+  Cause I can't h[Em]ave you the way that I want
+  Let's just go b[G]ack to the way it was
+  When we were on H[D]oneymoon Avenue
+  H[Am]oneymoon Avenue
+  B[Em]aby, coastin' like crazy
+  Can we get b[G]ack to the way it was?`,
+}
 
 const SeedLyrics = `[D]I looked in my rear view mirror [Am]and
 It seemed to make a lot more s[Em]ense
@@ -33,16 +60,16 @@ B[Em]aby, coastin' like crazy
 Can we get b[G]ack to the way it was?`;
 
 const Song = (props) => {
-  const [song, setSong] = useState({});
+  const [song, setSong] = useState(defaultSong);
   const [edit, setEdit] = useState(true);
 
   const saveSong = () => {
-    console.error(song);
+    // console.error(song);
     setEdit(false);
   }
 
   const updateSong = (property, value) => {
-    const updatedSong = { ... song };
+    const updatedSong = { ...song };
     updateSong[property] = value;
     setSong(updatedSong);
   }
@@ -82,15 +109,12 @@ const Song = (props) => {
 
   const buildSongLyrics = () => {
     if (edit) {
-      return <textarea className="song-textarea w-100 h-100" type="textarea" placeholder="type song here" value={SeedLyrics} />
+      return <textarea className="song-textarea w-100 h-100" type="textarea" placeholder="type song here" value={SeedLyrics} onChange={() => {}} />
     } else {
       const songLyrics = SeedLyrics.split('\n');
-      songLyrics.map(lyric => {
-        const bracketCheck = lyric.indexOf('[');
-        if (bracketCheck === -1) {
-
-        }
-      });
+      return songLyrics.map((lyric, index) => (
+        <SongPart key={index} lyric={lyric} />
+      ))
     }
   }
 
