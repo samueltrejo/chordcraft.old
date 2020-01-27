@@ -85,38 +85,30 @@ insert into [dbo].[Song]
  [Name], [Artist], [Genre], [DateAdded], [OwnerId], [Lyrics]
 )
 values
-('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1, '[D]I looked in my rear view mirror [Am]and' + CHAR(10) + 'It seemed to make a lot more s[Em]ense' + CHAR(10) + 'Than what I see ah[G]ead of us, ahead of us, yeah.' + CHAR(10) + '[D]I''m ready to make that t[Am]urn' + CHAR(10) + 'Before we both crash and b[Em]urn' + CHAR(10) + 'Cause that could be the d[G]eath of us, the death of us, baby' + CHAR(10) + '[Pre-Chorus]\n[D]You know how to drive in rain' + CHAR(10) + 'And [Am]you decided not to make a ch[Em]ange' + CHAR(10) + 'Stuck in the same old lane' + CHAR(10) + 'G[G]oing the wrong way home' + CHAR(10) + '[Chorus]' + CHAR(10) + 'I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,' + CHAR(10) + 'I''m under pressure' + CHAR(10) + 'Cause I can''t h[Em]ave you the way that I want' + CHAR(10) + 'Let''s just go b[G]ack to the way it was' + CHAR(10) + 'When we were on H[D]oneymoon Avenue' + CHAR(10) + 'H[Am]oneymoon Avenue' + CHAR(10) + 'B[Em]aby, coastin'' like crazy' + CHAR(10) + 'Can we get b[G]ack to the way it was?'),
+('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1,
+'[D]I looked in my rear view mirror [Am]and' + CHAR(10) +
+'It seemed to make a lot more s[Em]ense' + CHAR(10) +
+'Than what I see ah[G]ead of us, ahead of us, yeah.' + CHAR(10) +
+'[D]I''m ready to make that t[Am]urn' + CHAR(10) +
+'Before we both crash and b[Em]urn' + CHAR(10) +
+'Cause that could be the d[G]eath of us, the death of us, baby' + CHAR(10) +
+'[Pre-Chorus]\n[D]You know how to drive in rain' + CHAR(10) +
+'And [Am]you decided not to make a ch[Em]ange' + CHAR(10) +
+'Stuck in the same old lane' + CHAR(10) +
+'G[G]oing the wrong way home' + CHAR(10) +
+'[Chorus]' + CHAR(10) +
+'I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,' + CHAR(10) +
+'I''m under pressure' + CHAR(10) +
+'Cause I can''t h[Em]ave you the way that I want' + CHAR(10) +
+'Let''s just go b[G]ack to the way it was' + CHAR(10) +
+'When we were on H[D]oneymoon Avenue' + CHAR(10) +
+'H[Am]oneymoon Avenue' + CHAR(10) +
+'B[Em]aby, coastin'' like crazy' + CHAR(10) +
+'Can we get b[G]ack to the way it was?'),
+
 ('Folsom Prison Blues', 'Johnny Cash', 'Country', dateadd(day,-2, getdate()), 4, ''),
 ('Panic Station', 'Muse', 'Metal', dateadd(day,-3, getdate()), 2, ''),
 ('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3, '')
-go
-
--- Create a new table called '[Lyric]' in schema '[dbo]'
--- Drop the table if it already exists
-if object_id('[dbo].[Lyric]', 'U') is not null
-drop table [dbo].[Lyric]
-go
--- Create the table in the specified schema
-create table [dbo].[Lyric]
-(
-    [Id] int identity(1,1) not null primary key,
-	[Verse] nvarchar(255) not null,
-	[SongId] int not null
-		foreign key (SongId)
-		references [Song] (Id),
-	[IsDeleted] bit not null default (0)
-);
-go
-
--- Insert rows into table '[Lyric]' in schema '[dbo]'
-insert into [dbo].[Lyric]
-( -- Columns to insert data into
- [Verse], [SongId]
-)
-values
-(' I looked in my rear view mirror and', 1),
-('It seemed to make a lot more sense', 1),
-('Than what I see ahead of us, ahead of us, yeah.', 1)
 go
 
 -- Create a new table called '[Note]' in schema '[dbo]'
@@ -188,40 +180,6 @@ values
 (4, 'sus7', 1),
 (11, '6', 1),
 (9, '6/9', 1)
-go
-
--- Create a new table called '[LyricChord]' in schema '[dbo]'
--- Drop the table if it already exists
-if object_id('[dbo].[LyricChord]', 'U') is not null
-drop table [dbo].[LyricChord]
-go
--- Create the table in the specified schema
-create table [dbo].[LyricChord]
-(
-    [Id] int identity(1,1) not null primary key,
-	[Indentation] nvarchar(255) not null,
-	[LyricId] int not null
-		foreign key (LyricId)
-		references [Lyric] (Id),
-	[ChordId] int not null
-		foreign key (ChordId)
-		references [Chord] (Id),
-	[IsDeleted] bit not null default (0),
-);
-go
-
--- Insert rows into table '[LyricChord]' in schema '[dbo]'
-insert into [dbo].[LyricChord]
-( -- Columns to insert data into
- [Indentation], [LyricId], [ChordId]
-)
-values
-('', 1, 1),
-('                               ', 1, 1),
-('        ', 2, 1),
-('    ', 2, 1),
-('', 3, 1),
-('          ', 3, 1)
 go
 
 -- Create a new table called '[ChordNote]' in schema '[dbo]'
