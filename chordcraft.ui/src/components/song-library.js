@@ -18,9 +18,13 @@ const SongLibrary = (props) => {
       .catch(error => console.error(error));
   }, []);
 
+  const toSongDetails = (songId) => {
+    props.history.push(`/song/${songId}`);
+  }
+
   const buildLibrary = () => {
     return songs.map(song => (
-      <SongCard key={song.id} song={song} />
+      <SongCard key={song.id} song={song} toSongDetails={toSongDetails} />
     ));
   }
 
@@ -45,6 +49,11 @@ const SongLibrary = (props) => {
           </div>
         </div>
       </div>
+      {/* <footer className="footer w-100 bg-light text-center border-top border-bottomw border-light mt-auto">
+        <div className="container">
+          <span className="text-muted">Place sticky footer content here.</span>
+        </div>
+      </footer> */}
     </div>
   )
 };

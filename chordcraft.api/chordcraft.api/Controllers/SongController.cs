@@ -50,7 +50,7 @@ namespace chordcraft.api.Controllers
             return _repo.PostSong(newSong);
         }
 
-        // post song/id
+        // put song/id
         [HttpPut("{id}")]
         public Song UpdateSong(Song updatedSong, int id)
         {

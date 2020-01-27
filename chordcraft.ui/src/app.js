@@ -70,13 +70,13 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app position-relative">
       <Router>
         <Switch>
           <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
           <PublicRoute path="/login-options" component={LoginOptions} authed={authed} profile={profile} />
           <PrivateRoute path="/profile" component={Profile} authed={authed} profile={profile} />
-          <PrivateRoute path="/song" component={Song} authed={authed} profile={profile} />
+          <PrivateRoute path="/song/:id" component={Song} authed={authed} profile={profile} />
           <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
           <PublicRoute path="/song" component={Song} authed={authed} profile={profile} />

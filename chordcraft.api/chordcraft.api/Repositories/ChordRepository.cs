@@ -12,9 +12,11 @@ namespace chordcraft.api.Repositories
     public class ChordRepository
     {
         string _connectionString;
+        IConfiguration _configuration;
 
         public ChordRepository(IConfiguration configuration)
         {
+            _configuration = configuration;
             _connectionString = configuration.GetValue<string>("ConnectionString");
         }
 
