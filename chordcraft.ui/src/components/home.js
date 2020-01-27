@@ -31,6 +31,11 @@ const Home = (props) => {
           {/* <p>Are you new here, click the getting started button start creating, or saving you current songs.</p> */}
         </div>
       </Jumbotron>
+      {/* <footer className="footer w-100 bg-light text-center border-top border-bottomw border-light mt-auto">
+        <div className="container">
+          <span className="text-muted">Place sticky footer content here.</span>
+        </div>
+      </footer> */}
     </div>
   )
 };

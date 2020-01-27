@@ -71,7 +71,7 @@ create table [dbo].[Song]
 	[Genre] nvarchar(255),
 	[Transposition] int,
 	[DateAdded] datetime2 not null default getdate(),
-	[Lyrics] nvarchar(4000),
+	[Lyrics] nvarchar(4000) default '',
     [OwnerId] int not null
 		foreign key (OwnerId)
 		references [User] (Id),
@@ -82,13 +82,13 @@ go
 -- Insert rows into table '[Song]' in schema '[dbo]'
 insert into [dbo].[Song]
 ( -- Columns to insert data into
- [Name], [Artist], [Genre], [DateAdded], [OwnerId]
+ [Name], [Artist], [Genre], [DateAdded], [OwnerId], [Lyrics]
 )
 values
-('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1),
-('Folsom Prison Blues', 'Johnny Cash', 'Country', dateadd(day,-2, getdate()), 4),
-('Panic Station', 'Muse', 'Metal', dateadd(day,-3, getdate()), 2),
-('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3)
+('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1, '[D]I looked in my rear view mirror [Am]and' + CHAR(10) + 'It seemed to make a lot more s[Em]ense' + CHAR(10) + 'Than what I see ah[G]ead of us, ahead of us, yeah.' + CHAR(10) + '[D]I''m ready to make that t[Am]urn' + CHAR(10) + 'Before we both crash and b[Em]urn' + CHAR(10) + 'Cause that could be the d[G]eath of us, the death of us, baby' + CHAR(10) + '[Pre-Chorus]\n[D]You know how to drive in rain' + CHAR(10) + 'And [Am]you decided not to make a ch[Em]ange' + CHAR(10) + 'Stuck in the same old lane' + CHAR(10) + 'G[G]oing the wrong way home' + CHAR(10) + '[Chorus]' + CHAR(10) + 'I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,' + CHAR(10) + 'I''m under pressure' + CHAR(10) + 'Cause I can''t h[Em]ave you the way that I want' + CHAR(10) + 'Let''s just go b[G]ack to the way it was' + CHAR(10) + 'When we were on H[D]oneymoon Avenue' + CHAR(10) + 'H[Am]oneymoon Avenue' + CHAR(10) + 'B[Em]aby, coastin'' like crazy' + CHAR(10) + 'Can we get b[G]ack to the way it was?'),
+('Folsom Prison Blues', 'Johnny Cash', 'Country', dateadd(day,-2, getdate()), 4, ''),
+('Panic Station', 'Muse', 'Metal', dateadd(day,-3, getdate()), 2, ''),
+('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3, '')
 go
 
 -- Create a new table called '[Lyric]' in schema '[dbo]'

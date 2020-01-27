@@ -16,48 +16,8 @@ const defaultSong = {
   name: '',
   artist: '',
   genre: '',
-  lyrics: `[D]I looked in my rear view mirror [Am]and
-  It seemed to make a lot more s[Em]ense
-  Than what I see ah[G]ead of us, ahead of us, yeah.
-  [D]I'm ready to make that t[Am]urn
-  Before we both crash and b[Em]urn
-  Cause that could be the d[G]eath of us, the death of us, baby
-  [Pre-Chorus]
-  [D]You know how to drive in rain
-  And [Am]you decided not to make a ch[Em]ange
-  Stuck in the same old lane
-  G[G]oing the wrong way home
-  [Chorus]
-  I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,
-  I'm under pressure
-  Cause I can't h[Em]ave you the way that I want
-  Let's just go b[G]ack to the way it was
-  When we were on H[D]oneymoon Avenue
-  H[Am]oneymoon Avenue
-  B[Em]aby, coastin' like crazy
-  Can we get b[G]ack to the way it was?`,
+  lyrics: '',
 }
-
-const SeedLyrics = `[D]I looked in my rear view mirror [Am]and
-It seemed to make a lot more s[Em]ense
-Than what I see ah[G]ead of us, ahead of us, yeah.
-[D]I'm ready to make that t[Am]urn
-Before we both crash and b[Em]urn
-Cause that could be the d[G]eath of us, the death of us, baby
-[Pre-Chorus]
-[D]You know how to drive in rain
-And [Am]you decided not to make a ch[Em]ange
-Stuck in the same old lane
-G[G]oing the wrong way home
-[Chorus]
-I feel like my h[D]eart is stuck in bumper to bumper t[Am]raffic,
-I'm under pressure
-Cause I can't h[Em]ave you the way that I want
-Let's just go b[G]ack to the way it was
-When we were on H[D]oneymoon Avenue
-H[Am]oneymoon Avenue
-B[Em]aby, coastin' like crazy
-Can we get b[G]ack to the way it was?`;
 
 const Song = (props) => {
   const [song, setSong] = useState(defaultSong);
@@ -68,19 +28,27 @@ const Song = (props) => {
   }
 
   const saveSong = () => {
-    // console.error(song);
+    const updatedSong = { ...song };
+    songData.updateSong(updatedSong, updatedSong.id)
+      .then(() => {
+        getSong();
+        toggleEdit();
+      })
+      .catch(error => console.error(error));
     setEdit(false);
   }
 
   const updateSong = (property, value) => {
+
     const updatedSong = { ...song };
-    updateSong[property] = value;
+    updatedSong[property] = value;
     setSong(updatedSong);
   }
 
   const updateName = (event) => updateSong('name', event.target.value);
   const updateArtist = (event) => updateSong('artist', event.target.value);
   const updateGenre = (event) => updateSong('genre', event.target.value);
+  const updateLyrics = (event) => updateSong('lyrics', event.target.value);
 
 
   const getSong = () => {
@@ -105,7 +73,8 @@ const Song = (props) => {
           <Input id="song-genre" value={song.genre} onChange={updateGenre} />
         </FormGroup>
         <FormGroup>
-          <Button type="submit" color="dark">Save</Button>
+          <Button className="mr-1" type="submit" color="dark">Save</Button>
+          <Button type="button" color="dark" onClick={toggleEdit}>Cancel</Button>
         </FormGroup>
       </Form>
     ) : (
@@ -119,9 +88,9 @@ const Song = (props) => {
 
   const buildSongLyrics = () => {
     if (edit) {
-      return <textarea className="song-textarea w-100 h-100 p-0" type="textarea" placeholder="type song here" value={SeedLyrics} onChange={() => {}} />
+      return <textarea className="song-textarea w-100 h-100 p-0" type="textarea" placeholder="type song here" value={song.lyrics} onChange={updateLyrics} />
     } else {
-      const songLyrics = SeedLyrics.split('\n');
+      const songLyrics = song.lyrics.split('\n');
       return songLyrics.map((lyric, index) => (
         <SongPart key={index} lyric={lyric} />
       ))

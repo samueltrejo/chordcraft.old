@@ -66,8 +66,8 @@ namespace chordcraft.api.Repositories
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [OwnerId])
-                            output inserted.* values (@Name, @Artist, @Genre, @OwnerId)";
+                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [Lyrics] [OwnerId])
+                            output inserted.* values (@Name, @Artist, @Genre, @Lyrics, @OwnerId)";
                 var song = db.QueryFirstOrDefault<Song>(sql, newSong);
                 return song;
             }
@@ -80,6 +80,7 @@ namespace chordcraft.api.Repositories
                 var sql = @"update [Song]
                             set [Name] = @Name,
 	                            [Artist] = @Artist,
+                                [Lyrics] = @Lyrics,
 	                            [Genre] = @Genre
                              output inserted.*
                              where Id = @Id";
