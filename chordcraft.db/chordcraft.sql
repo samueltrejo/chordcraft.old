@@ -92,7 +92,8 @@ values
 '[D]I''m ready to make that t[Am]urn' + CHAR(10) +
 'Before we both crash and b[Em]urn' + CHAR(10) +
 'Cause that could be the d[G]eath of us, the death of us, baby' + CHAR(10) +
-'[Pre-Chorus]\n[D]You know how to drive in rain' + CHAR(10) +
+'[Pre-Chorus]' + CHAR(10) +
+'[D]You know how to drive in rain' + CHAR(10) +
 'And [Am]you decided not to make a ch[Em]ange' + CHAR(10) +
 'Stuck in the same old lane' + CHAR(10) +
 'G[G]oing the wrong way home' + CHAR(10) +

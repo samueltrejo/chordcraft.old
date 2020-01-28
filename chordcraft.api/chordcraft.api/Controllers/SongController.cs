@@ -40,7 +40,10 @@ namespace chordcraft.api.Controllers
         [HttpGet("{id}")]
         public Song GetSong(int id)
         {
-            return _repo.GetSong(id);
+            var song = _repo.GetSong(id);
+            var user = _userRepo.GetUser(FirebaseId);
+            song.IsOwner = song.OwnerId == user.Id;
+            return song;
         }
 
         // post song

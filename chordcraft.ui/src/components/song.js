@@ -17,6 +17,7 @@ const defaultSong = {
   artist: '',
   genre: '',
   lyrics: '',
+  isOwner: false,
 }
 
 const Song = (props) => {
@@ -58,32 +59,42 @@ const Song = (props) => {
   }
 
   const buildSongDetails = () => {
-    return edit ? (
-      <Form className="edit-form" onSubmit={saveSong}>
-        <FormGroup>
-          <Label for="song-name">Name</Label>
-          <Input id="song-name" value={song.name} onChange={updateName} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="song-artist">Artist</Label>
-          <Input id="song-artist" value={song.artist} onChange={updateArtist} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="song-genre">Genre</Label>
-          <Input id="song-genre" value={song.genre} onChange={updateGenre} />
-        </FormGroup>
-        <FormGroup>
-          <Button className="mr-1" type="submit" color="dark">Save</Button>
-          <Button type="button" color="dark" onClick={toggleEdit}>Cancel</Button>
-        </FormGroup>
-      </Form>
-    ) : (
+    if (song.isOwner && !edit) {
+      return (
       <div className="lead">
         <div className="pb-3">{song.name}</div>
         <div className="pb-3">{song.artist}</div>
         <div className="pb-3">{song.genre}</div>
         <Button color="dark" onClick={toggleEdit}>Edit Song</Button>
       </div>);
+    } else if (!song.isOwner) {
+      return (
+        <div className="lead">
+          <div className="pb-3">{song.name}</div>
+          <div className="pb-3">{song.artist}</div>
+          <div className="pb-3">{song.genre}</div>
+        </div>);
+    } else if (song.isOwner && edit) {
+      return (
+        <Form className="edit-form" onSubmit={saveSong}>
+          <FormGroup>
+            <Label for="song-name">Name</Label>
+            <Input id="song-name" value={song.name} onChange={updateName} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="song-artist">Artist</Label>
+            <Input id="song-artist" value={song.artist} onChange={updateArtist} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="song-genre">Genre</Label>
+            <Input id="song-genre" value={song.genre} onChange={updateGenre} />
+          </FormGroup>
+          <FormGroup>
+            <Button className="mr-1" type="submit" color="dark">Save</Button>
+            <Button type="button" color="dark" onClick={toggleEdit}>Cancel</Button>
+          </FormGroup>
+        </Form>)
+    }
   }
 
   const buildSongLyrics = () => {

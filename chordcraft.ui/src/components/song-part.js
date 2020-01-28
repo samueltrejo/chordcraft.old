@@ -25,7 +25,7 @@ const SongPart = (props) => {
       return (
         <tbody className="song-part">
           <tr className="chord-row">
-            <td></td>
+            <td> </td>
           </tr>
           <tr className="lyric-row">
             <td>{songLine}</td>
