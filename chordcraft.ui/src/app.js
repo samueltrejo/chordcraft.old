@@ -77,9 +77,9 @@ function App() {
           <PublicRoute path="/login-options" component={LoginOptions} authed={authed} profile={profile} />
           <PrivateRoute path="/profile" component={Profile} authed={authed} profile={profile} />
           <PrivateRoute path="/song/:id" component={Song} authed={authed} profile={profile} />
+          <PrivateRoute path="/song" component={Song} authed={authed} profile={profile} edit={true} />
           <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
-          <PublicRoute path="/song" component={Song} authed={authed} profile={profile} />
           <PublicRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/" component={Home} authed={authed} profile={profile} />
           <Route component={NotFound} />

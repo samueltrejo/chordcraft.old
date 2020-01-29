@@ -17,6 +17,7 @@ const defaultSong = {
   artist: '',
   genre: '',
   lyrics: '',
+  ownerId: 0,
   isOwner: false,
 }
 
@@ -28,19 +29,44 @@ const Song = (props) => {
     setEdit(!edit);
   }
 
-  const saveSong = () => {
-    const updatedSong = { ...song };
-    songData.updateSong(updatedSong, updatedSong.id)
-      .then(() => {
-        getSong();
-        toggleEdit();
-      })
+  useEffect(() => {
+    const songCopy = { ...song }
+    songCopy.ownerId = props.profile.id;
+    songCopy.isOwner = true;
+    if (props.edit) {
+      setEdit(true);
+      setSong(songCopy);
+    }
+  /* eslint-disable react-hooks/exhaustive-deps */
+  }, []);
+
+  const deleteSong = () => {
+    songData.deleteSong(song.id)
+      .then(() => getSong())
       .catch(error => console.error(error));
-    setEdit(false);
+  }
+
+  const submitSong = (event) => {
+    event.preventDefault();
+    const songCopy = { ...song };
+    if (!props.edit) {
+      songData.updateSong(songCopy, songCopy.id)
+        .then((response) => {
+          getSong(response.id);
+          toggleEdit();
+        })
+        .catch(error => console.error(error));
+    } else if (props.edit) {
+      songCopy.ownerId = props.profile.id;
+      songData.postSong(songCopy)
+        .then((response) => {
+          getSong(response.id);
+        })
+        .catch();
+    }
   }
 
   const updateSong = (property, value) => {
-
     const updatedSong = { ...song };
     updatedSong[property] = value;
     setSong(updatedSong);
@@ -52,8 +78,8 @@ const Song = (props) => {
   const updateLyrics = (event) => updateSong('lyrics', event.target.value);
 
 
-  const getSong = () => {
-    songData.getSong(props.match.params.id)
+  const getSong = (songId) => {
+    songData.getSong(props.match.params.id || songId)
       .then(song => setSong(song))
       .catch(error => console.error(error));
   }
@@ -65,7 +91,10 @@ const Song = (props) => {
         <div className="pb-3">{song.name}</div>
         <div className="pb-3">{song.artist}</div>
         <div className="pb-3">{song.genre}</div>
-        <Button color="dark" onClick={toggleEdit}>Edit Song</Button>
+        <div>
+          <Button className="mr-1" color="dark" onClick={toggleEdit}>Edit Song</Button>
+          <Button type="button" color="dark" onClick={deleteSong}>Delete</Button>
+        </div>
       </div>);
     } else if (!song.isOwner) {
       return (
@@ -76,18 +105,18 @@ const Song = (props) => {
         </div>);
     } else if (song.isOwner && edit) {
       return (
-        <Form className="edit-form" onSubmit={saveSong}>
+        <Form className="edit-form" onSubmit={submitSong}>
           <FormGroup>
             <Label for="song-name">Name</Label>
-            <Input id="song-name" value={song.name} onChange={updateName} />
+            <Input id="song-name" value={song.name} onChange={updateName} autoComplete="off" required />
           </FormGroup>
           <FormGroup>
             <Label for="song-artist">Artist</Label>
-            <Input id="song-artist" value={song.artist} onChange={updateArtist} />
+            <Input id="song-artist" value={song.artist} onChange={updateArtist} autoComplete="off" />
           </FormGroup>
           <FormGroup>
             <Label for="song-genre">Genre</Label>
-            <Input id="song-genre" value={song.genre} onChange={updateGenre} />
+            <Input id="song-genre" value={song.genre} onChange={updateGenre} autoComplete="off" />
           </FormGroup>
           <FormGroup>
             <Button className="mr-1" type="submit" color="dark">Save</Button>
@@ -108,7 +137,9 @@ const Song = (props) => {
     }
   }
 
-  useEffect(getSong, []);
+  useEffect(() => {
+    if (!props.edit) getSong();
+  }, []);
 
   return (
     <div className="song vh-100 pt-6 pb-5">
