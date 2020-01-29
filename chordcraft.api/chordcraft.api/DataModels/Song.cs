@@ -16,5 +16,6 @@ namespace chordcraft.api.DataModels
         public string Lyrics { get; set; }
         public DateTime DateAdded { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsOwner { get; set; } = false;
     }
 }

@@ -17,6 +17,8 @@ const defaultSong = {
   artist: '',
   genre: '',
   lyrics: '',
+  ownerId: 0,
+  isOwner: false,
 }
 
 const Song = (props) => {
@@ -27,19 +29,45 @@ const Song = (props) => {
     setEdit(!edit);
   }
 
-  const saveSong = () => {
-    const updatedSong = { ...song };
-    songData.updateSong(updatedSong, updatedSong.id)
-      .then(() => {
-        getSong();
-        toggleEdit();
-      })
+  useEffect(() => {
+    const songCopy = { ...song }
+    songCopy.ownerId = props.profile.id;
+    songCopy.isOwner = true;
+    if (props.edit) {
+      setEdit(true);
+      setSong(songCopy);
+    }
+  /* eslint-disable react-hooks/exhaustive-deps */
+  }, []);
+
+  const deleteSong = () => {
+    songData.deleteSong(song.id)
+      .then(() => props.history.push('/song-library'))
       .catch(error => console.error(error));
-    setEdit(false);
+  }
+
+  const submitSong = (event) => {
+    event.preventDefault();
+    const songCopy = { ...song };
+    if (!props.edit) {
+      songData.updateSong(songCopy, songCopy.id)
+        .then((response) => {
+          getSong(response.id);
+          toggleEdit();
+        })
+        .catch(error => console.error(error));
+    } else if (props.edit) {
+      songCopy.ownerId = props.profile.id;
+      songData.postSong(songCopy)
+        .then((response) => {
+          getSong(response.id);
+          toggleEdit();
+        })
+        .catch();
+    }
   }
 
   const updateSong = (property, value) => {
-
     const updatedSong = { ...song };
     updatedSong[property] = value;
     setSong(updatedSong);
@@ -51,39 +79,52 @@ const Song = (props) => {
   const updateLyrics = (event) => updateSong('lyrics', event.target.value);
 
 
-  const getSong = () => {
-    songData.getSong(props.match.params.id)
+  const getSong = (songId) => {
+    songData.getSong(props.match.params.id || songId)
       .then(song => setSong(song))
       .catch(error => console.error(error));
   }
 
   const buildSongDetails = () => {
-    return edit ? (
-      <Form className="edit-form" onSubmit={saveSong}>
-        <FormGroup>
-          <Label for="song-name">Name</Label>
-          <Input id="song-name" value={song.name} onChange={updateName} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="song-artist">Artist</Label>
-          <Input id="song-artist" value={song.artist} onChange={updateArtist} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="song-genre">Genre</Label>
-          <Input id="song-genre" value={song.genre} onChange={updateGenre} />
-        </FormGroup>
-        <FormGroup>
-          <Button className="mr-1" type="submit" color="dark">Save</Button>
-          <Button type="button" color="dark" onClick={toggleEdit}>Cancel</Button>
-        </FormGroup>
-      </Form>
-    ) : (
+    if (song.isOwner && !edit) {
+      return (
       <div className="lead">
         <div className="pb-3">{song.name}</div>
         <div className="pb-3">{song.artist}</div>
         <div className="pb-3">{song.genre}</div>
-        <Button color="dark" onClick={toggleEdit}>Edit Song</Button>
+        <div>
+          <Button className="mr-1" color="dark" onClick={toggleEdit}>Edit Song</Button>
+          <Button type="button" color="dark" onClick={deleteSong}>Delete</Button>
+        </div>
       </div>);
+    } else if (!song.isOwner) {
+      return (
+        <div className="lead">
+          <div className="pb-3">{song.name}</div>
+          <div className="pb-3">{song.artist}</div>
+          <div className="pb-3">{song.genre}</div>
+        </div>);
+    } else if (song.isOwner && edit) {
+      return (
+        <Form className="edit-form" onSubmit={submitSong}>
+          <FormGroup>
+            <Label for="song-name">Name</Label>
+            <Input id="song-name" value={song.name} onChange={updateName} autoComplete="off" required />
+          </FormGroup>
+          <FormGroup>
+            <Label for="song-artist">Artist</Label>
+            <Input id="song-artist" value={song.artist} onChange={updateArtist} autoComplete="off" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="song-genre">Genre</Label>
+            <Input id="song-genre" value={song.genre} onChange={updateGenre} autoComplete="off" />
+          </FormGroup>
+          <FormGroup>
+            <Button className="mr-1" type="submit" color="dark">Save</Button>
+            <Button type="button" color="dark" onClick={toggleEdit}>Cancel</Button>
+          </FormGroup>
+        </Form>)
+    }
   }
 
   const buildSongLyrics = () => {
@@ -97,7 +138,9 @@ const Song = (props) => {
     }
   }
 
-  useEffect(getSong, []);
+  useEffect(() => {
+    if (!props.edit) getSong();
+  }, []);
 
   return (
     <div className="song vh-100 pt-6 pb-5">

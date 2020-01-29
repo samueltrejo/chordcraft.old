@@ -58,8 +58,6 @@ namespace chordcraft.api
             services.AddScoped<UserRepository>();
             services.AddScoped<SongRepository>();
             services.AddScoped<NoteRepository>();
-            services.AddScoped<LyricRepository>();
-            services.AddScoped<LyricChordRepository>();
             services.AddScoped<ChordRepository>();
             services.AddScoped<ChordNoteRepository>();
         }
