@@ -42,7 +42,7 @@ const Song = (props) => {
 
   const deleteSong = () => {
     songData.deleteSong(song.id)
-      .then(() => getSong())
+      .then(() => props.history.push('/song-library'))
       .catch(error => console.error(error));
   }
 
@@ -61,6 +61,7 @@ const Song = (props) => {
       songData.postSong(songCopy)
         .then((response) => {
           getSong(response.id);
+          toggleEdit();
         })
         .catch();
     }

@@ -28,13 +28,13 @@ const updateSong = (updatedSong, songId) => new Promise((resolve, reject) => {
 
 const postSong = (newSong) => new Promise((resolve, reject) => {
   axios.post(baseUrl, newSong)
-    .then(response => resolve(response))
-    .catch(error => resolve(error));
+    .then(response => resolve(response.data))
+    .catch(error => reject(error));
 });
 
 const deleteSong = (songId) => new Promise((resolve, reject) => {
-  axios.post(`${baseUrl}/${songId}`)
-    .then(response => resolve(response))
+  axios.delete(`${baseUrl}/${songId}`)
+    .then(response => resolve(response.data))
     .catch(error => reject(error));
 })
 
