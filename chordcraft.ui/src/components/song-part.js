@@ -46,7 +46,8 @@ const SongPart = (props) => {
           songLine = songLine.slice(bracketPos);
         } else if (songLine.indexOf('[') === 0) {
           const sndBracketPos = songLine.indexOf(']');
-          chordCells.push(<Chord key={key} chord={songLine.slice(1, sndBracketPos)} />);
+          const chord = songLine.slice(1, sndBracketPos)
+          chordCells.push(<Chord key={key} chord={chord} />);
           songLine = songLine.slice(sndBracketPos + 1);
 
           const nextBracketPos = songLine.indexOf('[');

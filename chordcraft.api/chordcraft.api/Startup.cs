@@ -57,9 +57,7 @@ namespace chordcraft.api
             services.AddTransient(provider => connectionString);
             services.AddScoped<UserRepository>();
             services.AddScoped<SongRepository>();
-            services.AddScoped<NoteRepository>();
             services.AddScoped<ChordRepository>();
-            services.AddScoped<ChordNoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

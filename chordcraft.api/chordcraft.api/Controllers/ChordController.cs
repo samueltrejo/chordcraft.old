@@ -27,10 +27,16 @@ namespace chordcraft.api.Controllers
         }
 
         // get chord/id
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public Chord GetChord(int id)
         {
             return _repo.GetChord(id);
+        }
+
+        [HttpGet("{name}")]
+        public Chord GetChord(string name)
+        {
+            return _repo.GetChord(name);
         }
 
         // post chord

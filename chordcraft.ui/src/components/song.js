@@ -143,14 +143,14 @@ const Song = (props) => {
   }, []);
 
   return (
-    <div className="song vh-100 pt-6 pb-5">
+    <div className="song pt-6 pb-5">
       <Navigation authed={props.authed} profile={props.profile} />
       <div className="single-song container card rounded-0 h-100">
         <div className="row p-3 h-100">
           <div className="col-3">
             {buildSongDetails()}
           </div>
-          <div className={edit ? ('col-9 h-100') : ('col-9 h-100 overflow-auto')}>
+          <div className={edit ? ('col-9 h-100') : ('col-9 h-100')}>
             {buildSongLyrics()}
           </div>
         </div>
