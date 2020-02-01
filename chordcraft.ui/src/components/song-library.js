@@ -29,31 +29,35 @@ const SongLibrary = (props) => {
   }
 
   return (
-    <div className="song-library vh-100">
+    <div className="song-library">
       <Navigation authed={props.authed} profile={props.profile} />
-      <Jumbotron className="rounded-0 mb-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bandImg})`,
-        backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-        <div className="container text-light mt-5">
-          <h1 className="display-4">All Songs!</h1>
-          <p className="lead">A list of all of the songs shared by our lovely users!</p>
-        </div>
-      </Jumbotron>
-      <div className="container card rounded-0">
-        <div className="row">
-          <div className="col-3">
-            <div className="lead">Filters</div>
+      <div className="d-flex flex-column vh-100">
+        <div>
+          <Jumbotron className="rounded-0 mb-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bandImg})`,
+            backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+            <div className="container text-light mt-5">
+              <h1 className="display-4">All Songs!</h1>
+              <p className="lead">A list of all of the songs shared by our lovely users!</p>
+            </div>
+          </Jumbotron>
+          <div className="container card rounded-0">
+            <div className="row">
+              <div className="col-3">
+                <div className="lead">Filters</div>
+              </div>
+              <div className="col-9">
+                <div className="lead">Sort By</div>
+                <div>{buildLibrary()}</div>
+              </div>
+            </div>
           </div>
-          <div className="col-9">
-            <div className="lead">Sort By</div>
-            <div>{buildLibrary()}</div>
-          </div>
         </div>
+        <footer className="footer w-100 bg-light text-center mt-auto">
+          <div className="container">
+            <span className="text-muted">Chordcraft by @SamuelTrejo</span>
+          </div>
+        </footer>
       </div>
-      {/* <footer className="footer w-100 bg-light text-center border-top border-bottomw border-light mt-auto">
-        <div className="container">
-          <span className="text-muted">Place sticky footer content here.</span>
-        </div>
-      </footer> */}
     </div>
   )
 };
