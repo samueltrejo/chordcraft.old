@@ -10,12 +10,11 @@ const Chord = (props) => {
 
   useEffect(() => {
     chordData.getChordByName(props.chord)
-      // .then(chord => console.error(chord))
       .then(chordData => {
         if (chordData) setChord(chordData);
       })
-      // .then(chord => setChord(chord))
       .catch(error => console.error(error));
+  /* eslint-disable react-hooks/exhaustive-deps */
   }, [])
 
   const noteCheck = (note) => {
@@ -34,7 +33,6 @@ const Chord = (props) => {
 
   const buildChordOverlay = () => {
     const chordClass = isShown ? ('card position-absolute chord-overlay') : ('card position-absolute chord-overlay d-none')
-    // display chord overlay functionality here
     return (
       <div id="chord-overlay" className={chordClass}>
         <div className="piano-container d-flex flex-column">
@@ -44,9 +42,7 @@ const Chord = (props) => {
             <h6 className="card-subtitle mb-2 text-muted">Piano</h6>
 
             <div className="position-relative piano e">
-
               <div className="white-keys d-flex">
-
                 {noteCheck(4) ? (<div className="key c bg-info"></div>) : (<div className="key c"></div>)}
                 {noteCheck(6) ? (<div className="key d bg-info"></div>) : (<div className="key d"></div>)}
                 {noteCheck(8) ? (<div className="key e bg-info"></div>) : (<div className="key e"></div>)}
@@ -55,7 +51,6 @@ const Chord = (props) => {
                 {noteCheck(1) ? (<div className="key a bg-info"></div>) : (<div className="key a"></div>)}
                 {noteCheck(3) ? (<div className="key b bg-info"></div>) : (<div className="key b"></div>)}
               </div>
-
               <div className="black-keys position-absolute">
                 {noteCheck(5) ? (<div className="key csharp bg-warning"></div>) : (<div className="key csharp bg-black"></div>)}
                 {noteCheck(7) ? (<div className="key dsharp bg-warning"></div>) : (<div className="key dsharp bg-black"></div>)}

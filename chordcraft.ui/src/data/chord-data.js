@@ -27,13 +27,11 @@ const baseChords = [
   { id: 0, name: 'F#m', root: 10, quality: '', songId: 0, note1: 1, note2: 5, note3: null },
   { id: 0, name: 'Gm', root: 11, quality: '', songId: 0, note1: 2, note2: 6, note3: null },
   { id: 0, name: 'G#m', root: 12, quality: '', songId: 0, note1: 3, note2: 7, note3: null }
-]
+];
 
 const getChordByName = (chordName) => {
   const baseChordCheck = baseChords.find(chord => chord.name === chordName);
-  // if (baseChordCheck) console.error(baseChordCheck);
   if (baseChordCheck) return new Promise((resolve) => resolve(baseChordCheck))
-  // if (baseChordCheck) return new Promise((resolve) => resolve(baseChordCheck));
   else return new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/${chordName}`)
     .then(response => resolve(response.data))

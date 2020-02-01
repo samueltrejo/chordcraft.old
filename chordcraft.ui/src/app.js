@@ -70,7 +70,7 @@ function App() {
   }
 
   return (
-    <div className="app position-relative">
+    <div className="app">
       <Router>
         <Switch>
           <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
