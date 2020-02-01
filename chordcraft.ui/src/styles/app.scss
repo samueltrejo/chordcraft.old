@@ -9,7 +9,8 @@
     padding-top: 9rem;
   }
 
-  .song-card {
+  .song-card,
+  .chord {
     cursor: pointer;
   }
 }
@@ -53,8 +54,9 @@
     background-color: whitesmoke;
   }
 
+  .song-row,
   .single-song {
-    min-height: 450px;
+    min-height: 750px;
   }
   
   .song-part {

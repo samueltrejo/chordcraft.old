@@ -41,6 +41,17 @@ namespace chordcraft.api.Repositories
             }
         }
 
+        public Chord GetChord(string name)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = "select * from [Chord] where [Name] = @name";
+                var parameters = new { name };
+                var chord = db.QueryFirstOrDefault<Chord>(sql, parameters);
+                return chord;
+            }
+        }
+
         public bool DeleteChord(int id)
         {
             using (var db = new SqlConnection(_connectionString))

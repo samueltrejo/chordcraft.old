@@ -1,0 +1,45 @@
+$piano-width: 175px;
+$piano-height: 70px;
+$white-key-width: $piano-width / 7;
+$black-key-width: $piano-width / 13;
+$black-key-height: $piano-height / 1.6;
+$half-black-key: $black-key-width / 2;
+
+.chord-overlay {
+  top: -170px;
+  left: 0px;
+}
+
+.piano {
+  width: $piano-width;
+  height: $piano-height;
+  border: 1px solid black;
+}
+
+.black-keys {
+  top: 0;
+  left: $black-key-width + $half-black-key - 1;
+
+  .bg-black {
+    background: black;
+  }
+  
+  .key {
+    position: absolute;
+    width: $black-key-width;
+    height: $black-key-height;
+  }
+  .csharp { left: 0; }
+  .dsharp { left: $white-key-width - 1; }
+  .fsharp { left: ($white-key-width * 3) - 1; }
+  .gsharp { left: ($white-key-width * 4) - 1; }
+  .asharp { left: ($white-key-width * 5) - 1}
+}
+
+.white-keys {
+  .key {
+    width: $white-key-width;
+    height: $piano-height;
+    border: 2px solid black;
+  }
+}
