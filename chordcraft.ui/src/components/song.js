@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Button,
+  ButtonGroup,
+  ButtonToolbar,
   Form,
   FormGroup,
   Input,
@@ -24,6 +26,7 @@ const defaultSong = {
 const Song = (props) => {
   const [song, setSong] = useState(defaultSong);
   const [edit, setEdit] = useState(false);
+  const [caretPos, setCaretPos] = useState(0);
 
   const toggleEdit = () => {
     setEdit(!edit);
@@ -129,7 +132,13 @@ const Song = (props) => {
 
   const buildSongLyrics = () => {
     if (edit) {
-      return <textarea className="song-textarea w-100 h-100 p-0" type="textarea" placeholder="type song here" value={song.lyrics} onChange={updateLyrics} />
+      return (
+        <textarea
+          className="song-textarea w-100 h-100 p-0"
+          type="textarea" placeholder="type song here"
+          value={song.lyrics} onChange={updateLyrics}
+          onClick={getCaretPos} onKeyUp={getCaretPos} />
+      )
     } else {
       const songLyrics = song.lyrics.split('\n');
       return songLyrics.map((lyric, index) => (
@@ -138,22 +147,69 @@ const Song = (props) => {
     }
   }
 
+  const addChord = (event) => {
+    if (event.target.localName !== 'button') return;
+    
+    const songCopy = { ...song };
+    const chord = `[${event.target.textContent}]`;
+
+    songCopy.lyrics = `${songCopy.lyrics.slice(0, caretPos)}${chord}${songCopy.lyrics.slice(caretPos)}`;
+    setSong(songCopy);
+  }
+
+  const buildChordBank = () => {
+    if (edit) return (
+    <ButtonToolbar>
+      <ButtonGroup onClick={addChord}>
+        <Button>G</Button>
+        <Button>B</Button>
+        <Button>C</Button>
+        <Button>Am</Button>
+        <Button>Em</Button>
+        <Button>D</Button>
+        <Button>E</Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        {/* get chords created by user here */}
+      </ButtonGroup>
+    </ButtonToolbar>)
+  }
+
+  const getCaretPos = event => {
+    const newCaretPos = event.target.selectionStart;
+    setCaretPos(newCaretPos);
+  }
+
   useEffect(() => {
     if (!props.edit) getSong();
   }, []);
 
   return (
-    <div className="song pt-6 pb-5">
+    <div className="song">
       <Navigation authed={props.authed} profile={props.profile} />
-      <div className="single-song container card rounded-0">
-        <div className="song-row row p-3">
-          <div className="col-3">
-            {buildSongDetails()}
-          </div>
-          <div className="col-9">
-            {buildSongLyrics()}
+      <div className="d-flex flex-column vh-100">
+        <div className="pt-6 pb-5">
+          <div className="single-song container card rounded-0">
+            <div className="song-row row p-3">
+              <div className="col-3">
+                {buildSongDetails()}
+              </div>
+              <div className="col-9">
+                <div className="mb-3">
+                  {buildChordBank()}
+                </div>
+                <div className="h-75">
+                  {buildSongLyrics()}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <footer className="footer w-100 bg-light text-center mt-auto">
+          <div className="container">
+            <span className="text-muted">Chordcraft by @SamuelTrejo</span>
+          </div>
+        </footer>
       </div>
     </div>
   )
