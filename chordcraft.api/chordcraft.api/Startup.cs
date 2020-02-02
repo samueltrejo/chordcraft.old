@@ -54,7 +54,6 @@ namespace chordcraft.api
                 };
             });
 
-            services.AddTransient(provider => connectionString);
             services.AddScoped<UserRepository>();
             services.AddScoped<SongRepository>();
             services.AddScoped<ChordRepository>();

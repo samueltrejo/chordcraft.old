@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Dancing+Script|Devonshire&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script|Devonshire|Roboto&display=swap');
 
 .app {
   .mt-6 {
@@ -16,7 +16,8 @@
 }
 
 .navigation {
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Roboto', sans-serif;
+  // font-family: 'Dancing Script', cursive;
   transition: top 0.3s;
   height: 4rem;
   // background-color: rgba($color: whitesmoke, $alpha: 0.5);
@@ -28,9 +29,7 @@
 
 .home,
 .song-library {
-  .jumbotron {
-    font-family: 'Dancing Script', cursive;
-  }
+  font-family: 'Roboto', sans-serif;
 }
 
 .login-options {
@@ -74,7 +73,7 @@
 
 .song-card {
   .card {
-    font-family: 'Dancing Script', cursive;
+    // font-family: 'Dancing Script', cursive;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 2px 2px 5px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     height: 50px;
