@@ -147,10 +147,20 @@ const Song = (props) => {
     }
   }
 
+  const addChord = (event) => {
+    if (event.target.localName !== 'button') return;
+    
+    const songCopy = { ...song };
+    const chord = `[${event.target.textContent}]`;
+
+    songCopy.lyrics = `${songCopy.lyrics.slice(0, caretPos)}${chord}${songCopy.lyrics.slice(caretPos)}`;
+    setSong(songCopy);
+  }
+
   const buildChordBank = () => {
     if (edit) return (
     <ButtonToolbar>
-      <ButtonGroup>
+      <ButtonGroup onClick={addChord}>
         <Button>G</Button>
         <Button>B</Button>
         <Button>C</Button>
