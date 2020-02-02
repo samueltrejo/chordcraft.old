@@ -167,8 +167,7 @@ const Song = (props) => {
 
   const getCaretPos = event => {
     const newCaretPos = event.target.selectionStart;
-    // setCaretPos(newCaretPos);
-    console.error(newCaretPos);
+    setCaretPos(newCaretPos);
   }
 
   useEffect(() => {
