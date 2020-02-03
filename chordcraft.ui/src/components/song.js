@@ -7,7 +7,20 @@ import {
   FormGroup,
   Input,
   Label,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+} from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
+// import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import songData from '../data/song-data';
 
@@ -23,14 +36,37 @@ const defaultSong = {
   isOwner: false,
 }
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
+
 const Song = (props) => {
   const [song, setSong] = useState(defaultSong);
   const [edit, setEdit] = useState(false);
   const [caretPos, setCaretPos] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [value, setValue] = React.useState(0);
 
-  const toggleEdit = () => {
-    setEdit(!edit);
-  }
+  const toggleModal = () => setModal(!modal);
+
+  const toggleEdit = () => setEdit(!edit);
+
+  const handleChange = (event, newValue) => setValue(newValue);
+
+  const handleChangeIndex = index => setValue(index);
 
   useEffect(() => {
     const songCopy = { ...song }
@@ -171,6 +207,30 @@ const Song = (props) => {
       </ButtonGroup>
       <ButtonGroup>
         {/* get chords created by user here */}
+        <Button className="ml-3" color="info" onClick={toggleModal}>Add Chord</Button>
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>Chord Creation</ModalHeader>
+          <ModalBody>
+            <AppBar position="static" color="default">
+              <Tabs  value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
+                <Tab label="Create Tool" />
+                <Tab label="Custom Chord" />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+              <TabPanel value={value} index={0}>
+                Item One
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                Item Two
+              </TabPanel>
+            </SwipeableViews>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={toggleModal}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </ButtonGroup>
     </ButtonToolbar>)
   }
