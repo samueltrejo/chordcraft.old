@@ -8,7 +8,7 @@ import {
   Input,
   Label,
   Modal,
-  ModalHeader,
+  // ModalHeader,
   ModalBody,
   ModalFooter
 } from 'reactstrap';
@@ -60,7 +60,7 @@ const Song = (props) => {
   const [modal, setModal] = useState(false);
   const [value, setValue] = useState(0);
   const [root, setRoot] = useState('Root');
-  const [quality, setQuality] = useState('Quality');
+  const [quality, setQuality] = useState({desc1: 'Quality', desc2: ''});
   const [sharpFlat, setSharpFlat] = useState('');
 
   const toggleModal = () => setModal(!modal);
@@ -204,8 +204,57 @@ const Song = (props) => {
 
   const addSharpFlat = (event) => {
     if (event.target.localName !== 'button') return;
+    const value = event.target.textContent;
+    if (value === sharpFlat) {
+      setSharpFlat('');
+    } else {
+      setSharpFlat(event.target.textContent);
+    }
+  }
 
-    setSharpFlat(event.target.textContent);
+  const addMinor = (event) => {
+    if (event.target.localName !== 'button') return;
+    const qualityCopy = { ...quality };
+    const value = event.target.textContent;
+    if (qualityCopy.desc1 === value) {
+      qualityCopy.desc1 = '';
+      setQuality(qualityCopy);
+    } else {
+      // console.error(quality.desc2.includes('sus') || quality.desc2.includes('aug') || quality.desc2.includes('dim'));
+      if (quality.desc2.includes('sus') || quality.desc2.includes('aug') || quality.desc2.includes('dim')) {
+        qualityCopy.desc2 = '';
+      }
+      qualityCopy.desc1 = value;
+      setQuality(qualityCopy);
+    }
+  }
+
+  const addNum = (event) => {
+    if (event.target.localName !== 'button') return;
+    const qualityCopy = { ...quality };
+    const value = event.target.textContent;
+    if (qualityCopy.desc2 === value) {
+      qualityCopy.desc2 = '';
+      setQuality(qualityCopy);
+    } else {
+      qualityCopy.desc2 = value;
+      setQuality(qualityCopy);
+    }
+  }
+
+  const addDist = (event) => {
+    if (event.target.localName !== 'button') return;
+    const qualityCopy = { ...quality };
+    const value = event.target.textContent;
+    if (qualityCopy.desc2 === value) {
+      qualityCopy.desc1 = '';
+      qualityCopy.desc2 = '';
+      setQuality(qualityCopy);
+    } else {
+      qualityCopy.desc1 = '';
+      qualityCopy.desc2 = value;
+      setQuality(qualityCopy);
+    }
   }
 
   const buildChordBank = () => {
@@ -224,11 +273,11 @@ const Song = (props) => {
         {/* get chords created by user here */}
         <Button className="ml-3" color="info" onClick={toggleModal}>Add Chord</Button>
         <Modal isOpen={modal} toggle={toggleModal}>
-          <ModalHeader toggle={toggleModal}>Chord Creation</ModalHeader>
+          {/* <ModalHeader toggle={toggleModal}>Chord Builder</ModalHeader> */}
           <ModalBody>
             <AppBar position="static" color="default">
               <Tabs  value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" variant="fullWidth">
-                <Tab label="Create Tool" />
+                <Tab label="Chord Builder" />
                 <Tab label="Custom Chord" />
               </Tabs>
             </AppBar>
@@ -236,7 +285,7 @@ const Song = (props) => {
               <TabPanel value={value} index={0}>
                 <div className="d-flex justify-content-center mb-3">
                   <span className="chord-root text-right text-muted">{root}{sharpFlat}</span>
-                  <span className="chord-quality text-muted ml-1">{quality}</span>
+                  <span className="chord-quality text-muted ml-1">{quality.desc1}{quality.desc2}</span>
                 </div>
                 <ButtonToolbar className="justify-content-center">
                   <ButtonGroup onClick={addRoot}>
@@ -253,32 +302,39 @@ const Song = (props) => {
                   </ButtonGroup>
                 </ButtonToolbar>
                 <ButtonToolbar className="justify-content-center">
-                  <ButtonGroup>
+                  <ButtonGroup onClick={addMinor}>
                     <Button color="warning">m</Button>
                   </ButtonGroup>
-                  <ButtonGroup>
+                  <ButtonGroup onClick={addNum}>
                     <Button color="success">5</Button>
                     <Button color="success">6</Button>
                     <Button color="success">7</Button>
                     <Button color="success">9</Button>
                   </ButtonGroup>
-                  <ButtonGroup>
+                </ButtonToolbar>
+                <ButtonToolbar className="justify-content-center">
+                  <ButtonGroup onClick={addDist}>
                     <Button color="danger">sus2</Button>
                     <Button color="danger">sus4</Button>
                     <Button color="danger">dim</Button>
                     <Button color="danger">aug</Button>
                   </ButtonGroup>
                 </ButtonToolbar>
+                <ModalFooter className="mt-3">
+                  <Button color="dark" onClick={toggleModal}>Confirm</Button>
+                </ModalFooter>
               </TabPanel>
               <TabPanel value={value} index={1}>
-                Item Two
+                  <ModalFooter className="mt-3">
+                    <Button color="dark" onClick={toggleModal}>Confirm</Button>
+                  </ModalFooter>
               </TabPanel>
             </SwipeableViews>
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={toggleModal}>Do Something</Button>{' '}
+          {/* <ModalFooter>
+            <Button color="primary" onClick={toggleModal}>Confirm</Button>{' '}
             <Button color="secondary" onClick={toggleModal}>Cancel</Button>
-          </ModalFooter>
+          </ModalFooter> */}
         </Modal>
       </ButtonGroup>
     </ButtonToolbar>)
