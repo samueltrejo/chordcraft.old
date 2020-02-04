@@ -58,7 +58,10 @@ const Song = (props) => {
   const [edit, setEdit] = useState(false);
   const [caretPos, setCaretPos] = useState(0);
   const [modal, setModal] = useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [root, setRoot] = useState('Root');
+  const [quality, setQuality] = useState('Quality');
+  const [sharpFlat, setSharpFlat] = useState('');
 
   const toggleModal = () => setModal(!modal);
 
@@ -193,6 +196,18 @@ const Song = (props) => {
     setSong(songCopy);
   }
 
+  const addRoot = (event) => {
+    if (event.target.localName !== 'button') return;
+
+    setRoot(event.target.textContent);
+  }
+
+  const addSharpFlat = (event) => {
+    if (event.target.localName !== 'button') return;
+
+    setSharpFlat(event.target.textContent);
+  }
+
   const buildChordBank = () => {
     if (edit) return (
     <ButtonToolbar>
@@ -219,7 +234,41 @@ const Song = (props) => {
             </AppBar>
             <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
               <TabPanel value={value} index={0}>
-                Item One
+                <div className="d-flex justify-content-center mb-3">
+                  <span className="chord-root text-right text-muted">{root}{sharpFlat}</span>
+                  <span className="chord-quality text-muted ml-1">{quality}</span>
+                </div>
+                <ButtonToolbar className="justify-content-center">
+                  <ButtonGroup onClick={addRoot}>
+                    <Button color="primary">A</Button>
+                    <Button color="primary">B</Button>
+                    <Button color="primary">C</Button>
+                    <Button color="primary">D</Button>
+                    <Button color="primary">E</Button>
+                    <Button color="primary">F</Button>
+                    <Button color="primary">G</Button>
+                  </ButtonGroup>
+                  <ButtonGroup onClick={addSharpFlat}>
+                    <Button color="info">#</Button>
+                  </ButtonGroup>
+                </ButtonToolbar>
+                <ButtonToolbar className="justify-content-center">
+                  <ButtonGroup>
+                    <Button color="warning">m</Button>
+                  </ButtonGroup>
+                  <ButtonGroup>
+                    <Button color="success">5</Button>
+                    <Button color="success">6</Button>
+                    <Button color="success">7</Button>
+                    <Button color="success">9</Button>
+                  </ButtonGroup>
+                  <ButtonGroup>
+                    <Button color="danger">sus2</Button>
+                    <Button color="danger">sus4</Button>
+                    <Button color="danger">dim</Button>
+                    <Button color="danger">aug</Button>
+                  </ButtonGroup>
+                </ButtonToolbar>
               </TabPanel>
               <TabPanel value={value} index={1}>
                 Item Two
