@@ -257,6 +257,21 @@ const Song = (props) => {
     }
   }
 
+  const saveChord = () => {
+    // save chord functionality
+    if (root === '') return;
+    const chord = {
+      name: `${root}${sharpFlat}${quality.desc1}${quality.desc2}`,
+      root: root,
+      quality: `${quality.desc1}${quality.desc2}`,
+      songId: song.id,
+      note1: 0,
+      note2: 0,
+      note3: 0
+    }
+    console.error(chord);
+  }
+
   const buildChordBank = () => {
     if (edit) return (
     <ButtonToolbar>
@@ -297,19 +312,22 @@ const Song = (props) => {
                     <Button color="primary">F</Button>
                     <Button color="primary">G</Button>
                   </ButtonGroup>
-                  <ButtonGroup onClick={addSharpFlat}>
-                    <Button color="info">#</Button>
-                  </ButtonGroup>
                 </ButtonToolbar>
                 <ButtonToolbar className="justify-content-center">
-                  <ButtonGroup onClick={addMinor}>
-                    <Button color="warning">m</Button>
+                  <ButtonGroup onClick={addSharpFlat}>
+                    <Button color="warning">b</Button>
                   </ButtonGroup>
-                  <ButtonGroup onClick={addNum}>
-                    <Button color="success">5</Button>
+                  <ButtonGroup className="ml-1" onClick={addMinor}>
+                    <Button color="success">m</Button>
+                  </ButtonGroup>
+                  <ButtonGroup className="ml-1" onClick={addNum}>
+                    {/* <Button color="success">5</Button> */}
                     <Button color="success">6</Button>
                     <Button color="success">7</Button>
                     <Button color="success">9</Button>
+                  </ButtonGroup>
+                  <ButtonGroup className="ml-1" onClick={addSharpFlat}>
+                    <Button color="warning">#</Button>
                   </ButtonGroup>
                 </ButtonToolbar>
                 <ButtonToolbar className="justify-content-center">
@@ -320,13 +338,15 @@ const Song = (props) => {
                     <Button color="danger">aug</Button>
                   </ButtonGroup>
                 </ButtonToolbar>
-                <ModalFooter className="mt-3">
-                  <Button color="dark" onClick={toggleModal}>Confirm</Button>
+                <ModalFooter className="mt-3 pb-0">
+                  <Button color="info" onClick={saveChord}>Confirm</Button>{' '}
+                  <Button color="info" onClick={toggleModal}>Cancel</Button>
                 </ModalFooter>
               </TabPanel>
               <TabPanel value={value} index={1}>
-                  <ModalFooter className="mt-3">
-                    <Button color="dark" onClick={toggleModal}>Confirm</Button>
+                  <ModalFooter className="mt-3 pb-0">
+                    <Button color="info" onClick={saveChord}>Confirm</Button>{' '}
+                    <Button color="info" onClick={toggleModal}>Cancel</Button>
                   </ModalFooter>
               </TabPanel>
             </SwipeableViews>
