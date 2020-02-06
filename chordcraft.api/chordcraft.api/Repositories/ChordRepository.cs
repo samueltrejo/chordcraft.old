@@ -30,6 +30,17 @@ namespace chordcraft.api.Repositories
             }
         }
 
+        public IEnumerable<Chord> GetSongChords(int songId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = "select * from [Chord] where [SongId] = @songId and [IsDeleted] = 0";
+                var parameters = new { songId };
+                var chords = db.Query<Chord>(sql, parameters);
+                return chords;
+            }
+        }
+
         public Chord GetChord(int id)
         {
             using (var db = new SqlConnection(_connectionString))
@@ -66,26 +77,31 @@ namespace chordcraft.api.Repositories
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = @"insert into [Chord] ([RootNoteId], [SongId], [Quality])
-                            output inserted.* values (@RootNoteId, @SongId, @Quality)";
+                var sql = @"insert into [Chord] ([Name], [Root], [Quality], [SongId], [Note1], [Note2], [Note3])
+                            output inserted.* values (@Name, @Root, @Quality, @SongId, @Note1, @Note2, @Note3)";
                 var chord = db.QueryFirstOrDefault<Chord>(sql, newChord);
                 return chord;
             }
         }
 
-        public Chord UpdateChord(Chord updatedChord)
-        {
-            using (var db = new SqlConnection(_connectionString))
-            {
-                var sql = @"update [Chord]
-                            set [RootNoteId] = @RootNoteId,
-                                [Quality] = @Quality
-                             output inserted.*
-                             where Id = @Id";
+        //public Chord UpdateChord(Chord updatedChord)
+        //{
+        //    using (var db = new SqlConnection(_connectionString))
+        //    {
+        //        var sql = @"update [Chord]
+        //                    set [Name] = @Name,
+        //                        [Root] = @Root,
+        //                        [Quality] = @Quality,
+        //                        [SongId] = @SongId,
+        //                        [Note1] = @Note1,
+        //                        [Note2] = @Note2,
+        //                        [Note3] = @Note3,
+        //                     output inserted.*
+        //                     where Id = @Id";
 
-                var chord = db.QueryFirstOrDefault<Chord>(sql, updatedChord);
-                return chord;
-            }
-        }
+        //        var chord = db.QueryFirstOrDefault<Chord>(sql, updatedChord);
+        //        return chord;
+        //    }
+        //}
     }
 }
