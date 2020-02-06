@@ -9,7 +9,8 @@ const Chord = (props) => {
   const [chord, setChord] = useState({});
 
   useEffect(() => {
-    chordData.getChordByName(props.chord)
+    const chordLower = props.chord.toLowerCase();
+    chordData.getChordByName(chordLower)
       .then(chordData => {
         if (chordData) setChord(chordData);
       })

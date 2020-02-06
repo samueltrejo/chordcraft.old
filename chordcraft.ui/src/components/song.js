@@ -23,6 +23,7 @@ import SwipeableViews from 'react-swipeable-views';
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import songData from '../data/song-data';
+import chordData from '../data/chord-data';
 
 import Navigation from './nav';
 import SongPart from './song-part';
@@ -56,14 +57,18 @@ function TabPanel(props) {
 const Song = (props) => {
   const [song, setSong] = useState(defaultSong);
   const [edit, setEdit] = useState(false);
+  const [chords, setChords] = useState([]);
   const [caretPos, setCaretPos] = useState(0);
   const [modal, setModal] = useState(false);
+  // const [newModal, setNewModal] = useState(false);
   const [value, setValue] = useState(0);
   const [root, setRoot] = useState('Root');
   const [quality, setQuality] = useState({desc1: 'Quality', desc2: ''});
   const [sharpFlat, setSharpFlat] = useState('');
 
   const toggleModal = () => setModal(!modal);
+
+  // const toggleNewModal = () => setNewModal(!newModal);
 
   const toggleEdit = () => setEdit(!edit);
 
@@ -75,7 +80,7 @@ const Song = (props) => {
     const songCopy = { ...song }
     songCopy.ownerId = props.profile.id;
     songCopy.isOwner = true;
-    if (props.edit) {
+    if (props.isNew) {
       setEdit(true);
       setSong(songCopy);
     }
@@ -123,7 +128,10 @@ const Song = (props) => {
 
   const getSong = (songId) => {
     songData.getSong(props.match.params.id || songId)
-      .then(song => setSong(song))
+      .then(song => {
+        setSong(song);
+        getChords(song.id);
+      })
       .catch(error => console.error(error));
   }
 
@@ -221,7 +229,7 @@ const Song = (props) => {
       setQuality(qualityCopy);
     } else {
       // console.error(quality.desc2.includes('sus') || quality.desc2.includes('aug') || quality.desc2.includes('dim'));
-      if (quality.desc2.includes('sus') || quality.desc2.includes('aug') || quality.desc2.includes('dim')) {
+      if (quality.desc2.includes('sus') || quality.desc2.includes('aug') || quality.desc2.includes('dim') || quality.desc2.includes('5')) {
         qualityCopy.desc2 = '';
       }
       qualityCopy.desc1 = value;
@@ -237,6 +245,9 @@ const Song = (props) => {
       qualityCopy.desc2 = '';
       setQuality(qualityCopy);
     } else {
+      if (quality.desc1 === 'Quality') {
+        qualityCopy.desc1 = '';
+      }
       qualityCopy.desc2 = value;
       setQuality(qualityCopy);
     }
@@ -257,32 +268,61 @@ const Song = (props) => {
     }
   }
 
-  const saveChord = () => {
-    // save chord functionality
-    if (root === '') return;
-    const chord = {
-      name: `${root}${sharpFlat}${quality.desc1}${quality.desc2}`,
-      root: root,
-      quality: `${quality.desc1}${quality.desc2}`,
-      songId: song.id,
-      note1: 0,
-      note2: 0,
-      note3: 0
+  const addFifth = (event) => {
+    if (event.target.localName !== 'button') return;
+    const qualityCopy = { ...quality };
+    const value = event.target.textContent;
+    if (qualityCopy.desc2 === value) {
+      qualityCopy.desc1 = '';
+      qualityCopy.desc2 = '';
+      setQuality(qualityCopy);
+    } else {
+      qualityCopy.desc1 = '';
+      qualityCopy.desc2 = value;
+      setQuality(qualityCopy);
     }
-    console.error(chord);
+  }
+
+  const getChords = (songId) => {
+    chordData.getSongChords(songId)
+      .then(chords => setChords(chords))
+      .catch(error => console.error(error));
+  }
+
+  const saveChord = () => {
+    if (root === '') return;
+
+    const chordName = `${root.toLowerCase()}${sharpFlat !== '' ? ('b') : ('')}${quality.desc1}${quality.desc2}`;
+
+    const chord = chordData.getLocalChord(chordName);
+    chord.songId = song.id;
+
+    chordData.postChord(chord)
+      .then(() => {
+        getChords(song.id);
+        toggleModal();
+      })
+      .catch(error => console.error(error));
   }
 
   const buildChordBank = () => {
+    const chordButtons = chords.map(chord => (
+      <Button key={chord.id} color="success">{chord.name}</Button>
+    ));
+    
     if (edit) return (
     <ButtonToolbar>
       <ButtonGroup onClick={addChord}>
-        <Button>G</Button>
-        <Button>B</Button>
-        <Button>C</Button>
-        <Button>Am</Button>
-        <Button>Em</Button>
-        <Button>D</Button>
-        <Button>E</Button>
+        <Button color="warning">G</Button>
+        <Button color="warning">B</Button>
+        <Button color="warning">C</Button>
+        <Button color="warning">Am</Button>
+        <Button color="warning">Em</Button>
+        <Button color="warning">D</Button>
+        <Button color="warning">E</Button>
+      </ButtonGroup>
+      <ButtonGroup onClick={addChord}>
+        {chordButtons}
       </ButtonGroup>
       <ButtonGroup>
         {/* get chords created by user here */}
@@ -315,16 +355,17 @@ const Song = (props) => {
                 </ButtonToolbar>
                 <ButtonToolbar className="justify-content-center">
                   <ButtonGroup onClick={addSharpFlat}>
-                    <Button color="warning">b</Button>
+                    {/* <Button color="warning">b</Button> */}
                   </ButtonGroup>
                   <ButtonGroup className="ml-1" onClick={addMinor}>
                     <Button color="success">m</Button>
                   </ButtonGroup>
+                  <ButtonGroup onClick={addFifth}>
+                    <Button color="success">5</Button>
+                  </ButtonGroup>
                   <ButtonGroup className="ml-1" onClick={addNum}>
-                    {/* <Button color="success">5</Button> */}
                     <Button color="success">6</Button>
                     <Button color="success">7</Button>
-                    <Button color="success">9</Button>
                   </ButtonGroup>
                   <ButtonGroup className="ml-1" onClick={addSharpFlat}>
                     <Button color="warning">#</Button>
@@ -344,8 +385,9 @@ const Song = (props) => {
                 </ModalFooter>
               </TabPanel>
               <TabPanel value={value} index={1}>
+                  <div>Oops!, looks like this feature is not available yet. Please try again later.</div>
                   <ModalFooter className="mt-3 pb-0">
-                    <Button color="info" onClick={saveChord}>Confirm</Button>{' '}
+                    <Button color="info" onClick={saveChord} disabled>Confirm</Button>{' '}
                     <Button color="info" onClick={toggleModal}>Cancel</Button>
                   </ModalFooter>
               </TabPanel>

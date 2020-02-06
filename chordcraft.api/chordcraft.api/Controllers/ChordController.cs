@@ -26,6 +26,13 @@ namespace chordcraft.api.Controllers
             return _repo.GetChords();
         }
 
+        // get chord/song/songId
+        [HttpGet("song/{songId}")]
+        public IEnumerable<Chord> GetSongChords(int songId)
+        {
+            return _repo.GetSongChords(songId);
+        }
+
         // get chord/id
         [HttpGet("{id:int}")]
         public Chord GetChord(int id)
@@ -47,12 +54,12 @@ namespace chordcraft.api.Controllers
         }
 
         // post chord/id
-        [HttpPut("{id}")]
-        public Chord UpdateChord(Chord updatedChord, int id)
-        {
-            updatedChord.Id = id;
-            return _repo.UpdateChord(updatedChord);
-        }
+        //[HttpPut("{id}")]
+        //public Chord UpdateChord(Chord updatedChord, int id)
+        //{
+        //    updatedChord.Id = id;
+        //    return _repo.UpdateChord(updatedChord);
+        //}
 
         // delete chord/id
         [HttpDelete("{id}")]
