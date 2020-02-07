@@ -5,8 +5,8 @@ import Navigation from './nav';
 const Profile = (props) => {
   return (
     <div className="profile">
-      <Navigation authed={props.authed} profile={props.profile} />
-      <div className="container mt-5">profile</div>
+      <Navigation authed={props.authed} profile={props.profile} dark={false} light={true} />
+      <div className="container mt-5"></div>
     </div>
   )
 };

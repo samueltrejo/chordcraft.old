@@ -25,21 +25,21 @@ const MySongs = (props) => {
 
   return (
     <div className="my-songs">
-      <Navigation authed={props.authed} profile={props.profile} />
-      <Jumbotron className="rounded-0 mb-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${redWall})`,
+      <Navigation authed={props.authed} profile={props.profile} dark={true} />
+      <Jumbotron className="rounded-0 mb-0" style={{backgroundImage: `url(${redWall})`,
         backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-        <div className="container text-light mt-5">
-          <h1 className="display-4">All Songs!</h1>
-          <p className="lead">A list of all of the songs shared by our lovely users!</p>
+        <div className="container text-light mt-6">
+          <h1 className="jumbo-title display-4">My Songs!</h1>
+          <p className="lead">A list of all of my songs!</p>
         </div>
       </Jumbotron>
       <div className="container card rounded-0">
         <div className="row">
-          <div className="col-3">
+          <div className="col-12 col-md-3">
           <div className="lead">Preview</div>
           <div className="lead">Filters</div>
           </div>
-          <div className="col-9">
+          <div className="col-12 col-md-9">
             <div className="lead">Sort By</div>
             <div>{buildLibrary()}</div>
           </div>
