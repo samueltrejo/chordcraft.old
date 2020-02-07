@@ -20,6 +20,10 @@ import {
   // NavbarText
 } from 'reactstrap';
 
+// import logo from '../assets/chordcraft.svg';
+// import logo2 from '../assets/chordcraft-sheetmusic-black.svg';
+import logo3 from '../assets/chordcraft-sheetmusic-white-outline.svg';
+
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +57,10 @@ const Navigation = (props) => {
   return (
     <div className="navigation fixed-top">
       <Navbar className="container w-100" color="transparent" dark expand="md">
-        <NavbarBrand className="brand lead" tag={RouteLink} to="/"><div className="display-4">Chordcraft</div></NavbarBrand>
+        <NavbarBrand className="brand lead d-flex" tag={RouteLink} to="/">
+          {/* <div className="display-4">Chordcraft</div> */}
+          <img className="position-fixed logo" src={logo3} alt="" />
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto lead" navbar>

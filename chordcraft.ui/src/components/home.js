@@ -14,7 +14,7 @@ const Home = (props) => {
         <div>
           <Jumbotron className="rounded-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${instrumentsImg})`,
             backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-            <div className="container text-light mt-5">
+            <div className="container text-light mt-6">
               <h1 className="display-4 text-center">Welcome to Chordcraft!</h1>
               <p className="lead mx-5">A tool and creative playground to help you do what you do best. This tool is a top-notch editor for creating song chords and lyrics. Click the button below to get started.</p>
               <hr className="bg-light my-2 w-75" />
