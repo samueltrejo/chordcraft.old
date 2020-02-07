@@ -413,15 +413,15 @@ const Song = (props) => {
 
   return (
     <div className="song">
-      <Navigation authed={props.authed} profile={props.profile} />
+      <Navigation authed={props.authed} profile={props.profile} dark={false} light={true} />
       <div className="d-flex flex-column vh-100">
         <div className="pt-6 pb-5">
           <div className="single-song container card rounded-0">
             <div className="song-row row p-3">
-              <div className="col-3">
+              <div className="col-12 col-md-3">
                 {buildSongDetails()}
               </div>
-              <div className="col-9">
+              <div className="col-12 col-md-9">
                 <div className="mb-3">
                   {buildChordBank()}
                 </div>
