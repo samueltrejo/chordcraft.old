@@ -20,6 +20,7 @@ import SongLibrary from './components/song-library';
 import MySongs from './components/my-songs';
 import NotFound from './components/not-found';
 import GettingStarted from './components/getting-started';
+import PianoPlayground from './components/piano-playground';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.scss';
@@ -82,6 +83,7 @@ function App() {
           <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
           <PrivateRoute path="/getting-started" component={GettingStarted} authed={authed} profile={profile} />
+          <PrivateRoute path="/piano-playground" component={PianoPlayground} authed={authed} profile={profile} />
           <PrivateRoute path="/" component={Home} authed={authed} profile={profile} />
           <Route component={NotFound} />
         </Switch>

@@ -1,17 +1,17 @@
 import React from 'react';
-// import { NavLink as RouteLink } from "react-router-dom";
+import { NavLink as RouteLink } from "react-router-dom";
 import {
   Button,
   Card,
   CardBody,
   CardImg,
-  CardSubtitle,
+  // CardSubtitle,
   CardText,
-  CardTitle,
+  // CardTitle,
   Jumbotron
 } from 'reactstrap';
 
-import instrumentsImg from '../assets/wes-hicks-MEL-jJnm7RQ-unsplash.jpg'
+// import instrumentsImg from '../assets/wes-hicks-MEL-jJnm7RQ-unsplash.jpg'
 import pianoLogo from '../assets/piano-playground.svg';
 import libraryLogo from '../assets/song-library.svg';
 import songLogo from '../assets/new-song.svg';
@@ -45,7 +45,7 @@ const Home = (props) => {
                     <CardBody>
                       <div className="lead">Checkout out piano playground</div>
                       <CardText>Play and record a virtual piano.</CardText>
-                      <Button className="rounded-0" color="warning">Playground</Button>
+                      <Button tag={RouteLink} to="/piano-playground" className="rounded-0" color="warning">Playground</Button>
                     </CardBody>
                   </Card>
                 </div>
