@@ -13,7 +13,7 @@ const SongCard = (props) => {
 
   return (
     <div className="song-card my-3" onClick={toDetails}>
-      <Card className="row flex-row m-0 p-0 pt-2 rounded-0 border-0">
+      <Card className="row flex-row m-0 p-0 py-2 rounded-0 border-0">
         <div className="song-title position-relative col-12 col-md-4 p-0 m-0">
           <div className="title-text position-absolute text-white px-1">{props.song.name}</div>
         </div>
