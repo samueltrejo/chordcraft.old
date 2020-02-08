@@ -67,6 +67,7 @@ create table [dbo].[Song]
 (
     [Id] int identity(1,1) not null primary key,
 	[Name] nvarchar(255) not null,
+	[IsPublic] bit not null default(0),
 	[Artist] nvarchar(255),
 	[Genre] nvarchar(255),
 	[Transposition] int,
@@ -112,44 +113,6 @@ values
 ('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3, '')
 go
 
--- Create a new table called '[Note]' in schema '[dbo]'
--- Drop the table if it already exists
---if object_id('[dbo].[Note]', 'U') is not null
---drop table [dbo].[Note]
---go
--- Create the table in the specified schema
---create table [dbo].[Note]
---(
---    [Id] int identity(1,1) not null primary key,
---	[Natural] nvarchar(255),
---    [Sharp] nvarchar(255),
---    [Flat] nvarchar(255),
---	[Sound] nvarchar(255) not null,
---	[IsNatural] bit not null,
---	[IsDeleted] bit not null default (0),
---);
---go
-
--- Insert rows into table '[Note]' in schema '[dbo]'
---insert into [dbo].[Note]
---( -- Columns to insert data into
--- [Natural], [Sharp], [Flat], [Sound], [IsNatural]
---)
---values
---('A', null, null, 'asoundurl', 1),-1
---(null, 'A\u266F', 'B\u266D', 'asharpsoundurl', 0),-2
---('B', null, null, 'bsoundurl', 1),-3
---('C', null, null, 'csoundurl', 1),-4
---(null, 'C\u266F', 'D\u266D', 'csharpsoundurl', 0),-5
---('D', null, null, 'dsoundurl', 1),-6
---(null, 'D\u266F', 'E\u266D', 'dsharpsoundurl', 0),-7
---('E', null, null, 'esoundurl', 1),-8
---('F', null, null, 'fsoundurl', 1),-9
---(null, 'F\u266F', 'G\u266D', 'fsharpsoundurl', 0),-10
---('G', null, null, 'gsoundurl', 1),-11
---(null, 'G\u266F', 'A\u266D', 'gsharpsoundurl', 0)-12
---go
-
 -- Create a new table called '[Chord]' in schema '[dbo]'
 -- Drop the table if it already exists
 if object_id('[dbo].[Chord]', 'U') is not null
@@ -181,39 +144,3 @@ values
 ('A6', 1, '6', 1, 5, 8, 10),
 ('E7', 5, '7', 2, 12, 3, 6)
 go
-
--- Create a new table called '[ChordNote]' in schema '[dbo]'
--- Drop the table if it already exists
---if object_id('[dbo].[ChordNote]', 'U') is not null
---drop table [dbo].[ChordNote]
---go
--- Create the table in the specified schema
---create table [dbo].[ChordNote]
---(
---    [Id] int identity(1,1) not null primary key,
---    [ChordId] int not null
---		foreign key (ChordId)
---		references [Chord] (Id),
---	[NoteId] int not null
---		foreign key (NoteId)
---		references [Note] (Id),
---	[IsDeleted] bit not null default (0),
---);
---go
-
--- Insert rows into table '[ChordNote]' in schema '[dbo]'
---insert into [dbo].[ChordNote]
---( -- Columns to insert data into
--- [ChordId], [NoteId]
---)
---values
---(4, 4),
---(4, 8),
---(4, 11),
---(4, 4),
---(4, 8),
---(4, 11),
---(4, 4),
---(4, 8),
---(4, 11)
---go
