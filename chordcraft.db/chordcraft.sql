@@ -83,10 +83,10 @@ go
 -- Insert rows into table '[Song]' in schema '[dbo]'
 insert into [dbo].[Song]
 ( -- Columns to insert data into
- [Name], [Artist], [Genre], [DateAdded], [OwnerId], [Lyrics]
+ [Name], [Artist], [Genre], [DateAdded], [OwnerId], [IsPublic], [Lyrics]
 )
 values
-('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1,
+('Honeymoon Avenue', 'Ariana Grande', 'Pop', dateadd(day,-1, getdate()), 1, 1,
 '[D]I looked in my rear view mirror [Am]and' + CHAR(10) +
 'It seemed to make a lot more s[Em]ense' + CHAR(10) +
 'Than what I see ah[G]ead of us, ahead of us, yeah.' + CHAR(10) +
@@ -108,9 +108,9 @@ values
 'B[Em]aby, coastin'' like crazy' + CHAR(10) +
 'Can we get b[G]ack to the way it was?'),
 
-('Folsom Prison Blues', 'Johnny Cash', 'Country', dateadd(day,-2, getdate()), 4, ''),
-('Panic Station', 'Muse', 'Metal', dateadd(day,-3, getdate()), 2, ''),
-('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3, '')
+('Folsom Prison Blues', 'Johnny Cash', 'Country', dateadd(day,-2, getdate()), 4, 0, ''),
+('Panic Station', 'Muse', 'Metal', dateadd(day,-3, getdate()), 2, 1, ''),
+('Into the Unknown', 'Panic at the Disco', 'Pop Rock', dateadd(day,-4, getdate()), 3, 1, '')
 go
 
 -- Create a new table called '[Chord]' in schema '[dbo]'
