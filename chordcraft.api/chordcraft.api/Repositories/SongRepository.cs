@@ -66,8 +66,8 @@ namespace chordcraft.api.Repositories
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [Lyrics], [OwnerId])
-                            output inserted.* values (@Name, @Artist, @Genre, @Lyrics, @OwnerId)";
+                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [Lyrics], [OwnerId], [IsPublic])
+                            output inserted.* values (@Name, @Artist, @Genre, @Lyrics, @OwnerId, @IsPublic)";
                 var song = db.QueryFirstOrDefault<Song>(sql, newSong);
                 return song;
             }
