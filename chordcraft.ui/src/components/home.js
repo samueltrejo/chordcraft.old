@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink as RouteLink } from "react-router-dom";
-import { Button, Jumbotron } from 'reactstrap';
+// import { NavLink as RouteLink } from "react-router-dom";
+import { Jumbotron } from 'reactstrap';
 
 import instrumentsImg from '../assets/wes-hicks-MEL-jJnm7RQ-unsplash.jpg'
 import pianoImg from '../assets/patrick-schneider-sbAs4JgOesI-unsplash.jpg'
