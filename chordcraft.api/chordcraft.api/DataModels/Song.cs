@@ -9,6 +9,7 @@ namespace chordcraft.api.DataModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string IsPublic { get; set; }
         public string Artist { get; set; }
         public string Genre { get; set; }
         public int OwnerId { get; set; }

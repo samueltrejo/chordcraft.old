@@ -21,6 +21,7 @@ import MySongs from './components/my-songs';
 import NotFound from './components/not-found';
 import GettingStarted from './components/getting-started';
 import PianoPlayground from './components/piano-playground';
+import NewSong from './components/new-song';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.scss';
@@ -79,7 +80,7 @@ function App() {
           <PublicRoute path="/login-options" component={LoginOptions} authed={authed} profile={profile} />
           <PrivateRoute path="/profile" component={Profile} authed={authed} profile={profile} />
           <PrivateRoute path="/song/:id" component={Song} authed={authed} profile={profile} />
-          <PrivateRoute path="/song" component={Song} authed={authed} profile={profile} isNew={true} />
+          <PrivateRoute path="/song" component={NewSong} authed={authed} profile={profile} isNew={true} />
           <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
           <PrivateRoute path="/getting-started" component={GettingStarted} authed={authed} profile={profile} />

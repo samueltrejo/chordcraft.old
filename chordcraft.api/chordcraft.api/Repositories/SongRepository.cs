@@ -24,7 +24,7 @@ namespace chordcraft.api.Repositories
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = "select * from [Song] where [IsDeleted] = 0";
+                var sql = "select * from [Song] where [IsDeleted] = 0 and [IsPublic] = 1";
                 var songs = db.Query<Song>(sql);
                 return songs;
             }
@@ -66,8 +66,8 @@ namespace chordcraft.api.Repositories
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [Lyrics], [OwnerId])
-                            output inserted.* values (@Name, @Artist, @Genre, @Lyrics, @OwnerId)";
+                var sql = @"insert into [Song] ([Name], [Artist], [Genre], [Lyrics], [OwnerId], [IsPublic])
+                            output inserted.* values (@Name, @Artist, @Genre, @Lyrics, @OwnerId, @IsPublic)";
                 var song = db.QueryFirstOrDefault<Song>(sql, newSong);
                 return song;
             }
