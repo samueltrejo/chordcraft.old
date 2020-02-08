@@ -4,9 +4,35 @@ import chordData from '../data/chord-data';
 
 import '../styles/chord.scss';
 
+const noteData = chordData.getNotes();
+
 const Chord = (props) => {
   const [isShown, setIsShown] = useState(false);
   const [chord, setChord] = useState({});
+  const [notes] = useState(noteData);
+
+  const playChord = () => {
+    // console.error(notes[`note${chord.root}`].currentTime)
+    if (notes[`note${chord.root}`]) {
+      notes[`note${chord.root}`].currentTime = 0;
+      notes[`note${chord.root}`].play();
+    }
+    
+    if (notes[`note${chord.note2}`]) {
+      notes[`note${chord.note1}`].currentTime = 0;
+      notes[`note${chord.note1}`].play();
+    }
+
+    if (notes[`note${chord.note2}`]) {
+      notes[`note${chord.note2}`].currentTime = 0;
+      notes[`note${chord.note2}`].play();
+    }
+
+    if (notes[`note${chord.note3}`]) {
+      notes[`note${chord.note3}`].currentTime = 0;
+      notes[`note${chord.note3}`].play();
+    }
+  }
 
   useEffect(() => {
     const chordLower = props.chord.toLowerCase();
@@ -72,7 +98,7 @@ const Chord = (props) => {
   }
 
   return (
-    <td className="chord position-relative">
+    <td className="chord position-relative" onClick={playChord}>
       <span onMouseOver={showChord} onMouseLeave={hideChord}>{props.chord}</span>
       {buildChordOverlay()}
     </td>

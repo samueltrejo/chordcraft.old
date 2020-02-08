@@ -2,6 +2,21 @@ import axios from 'axios';
 
 const baseUrl = 'https://localhost:44301/chord';
 
+const notes = {
+    note1: new Audio('https://awiclass.monoame.com/pianosound/set/6.wav'),
+    note2: new Audio('https://awiclass.monoame.com/pianosound/set/6.5.wav'),
+    note3: new Audio('https://awiclass.monoame.com/pianosound/set/7.wav'),
+    note4: new Audio('https://awiclass.monoame.com/pianosound/set/1.wav'),
+    note5: new Audio('https://awiclass.monoame.com/pianosound/set/1.5.wav'),
+    note6: new Audio('https://awiclass.monoame.com/pianosound/set/2.wav'),
+    note7: new Audio('https://awiclass.monoame.com/pianosound/set/2.5.wav'),
+    note8: new Audio('https://awiclass.monoame.com/pianosound/set/3.wav'),
+    note9: new Audio('https://awiclass.monoame.com/pianosound/set/4.wav'),
+    note10: new Audio('https://awiclass.monoame.com/pianosound/set/4.5.wav'),
+    note11: new Audio('https://awiclass.monoame.com/pianosound/set/5.wav'),
+    note12: new Audio('https://awiclass.monoame.com/pianosound/set/5.5.wav')
+};
+
 const chords = {
   a: { id: 0, name: 'A', root: 1, quality: '', songId: 0, note1: 5, note2: 8, note3: null },
   ab: { id: 0, name: 'A#', root: 2, quality: '', songId: 0, note1: 6, note2: 9, note3: null },
@@ -141,6 +156,10 @@ const getLocalChord = (chordName) => {
   return chords[chordName];
 }
 
+const getNotes = () => {
+  return notes;
+}
+
 const getSongChords = (songId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/song/${songId}`)
     .then(response => resolve(response.data))
@@ -169,4 +188,5 @@ export default {
   getLocalChord,
   getChordByName,
   postChord,
+  getNotes,
 }
