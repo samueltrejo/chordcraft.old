@@ -20,7 +20,7 @@ body {
 }
 
 .navigation {
-  font-family: Times, serif;
+  font-family: Helvetica, sans-serif;
   // font-family: 'Dancing Script', cursive;
   transition: top 0.3s;
   height: 4rem;
@@ -40,11 +40,19 @@ body {
 .home,
 .song-library,
 .my-songs,
-.getting-started {
+.getting-started,
+.piano-playground {
   .jumbo-title {
-    font-family: Times, serif;
+    font-family: 'Dancing Script', cursive;
+    font-size: 9rem;
   }
   font-family: Helvetica, sans-serif;
+
+  .piano-logo {
+    height: 200px;
+    width: 200px;
+    // border-radius: 50%;
+  }
 }
 
 .login-options {
