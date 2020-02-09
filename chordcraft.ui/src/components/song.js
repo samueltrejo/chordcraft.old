@@ -59,6 +59,7 @@ const Song = (props) => {
   const [edit, setEdit] = useState(false);
   const [chords, setChords] = useState([]);
   const [caretPos, setCaretPos] = useState(0);
+  const [newCaretPos, setNewCaretPos] = useState(0);
   const [modal, setModal] = useState(false);
   // const [newModal, setNewModal] = useState(false);
   const [value, setValue] = useState(0);
@@ -177,14 +178,26 @@ const Song = (props) => {
     }
   }
 
+  useEffect(() => {
+    const songInput = document.getElementById('song-textarea');
+    if (songInput) {
+      songInput.focus();
+      songInput.setSelectionRange(newCaretPos, newCaretPos);
+    }
+  }, [newCaretPos]);
+
   const buildSongLyrics = () => {
     if (edit) {
       return (
         <textarea
+          id="song-textarea"
           className="song-textarea w-100 h-100 p-0"
-          type="textarea" placeholder="type song here"
-          value={song.lyrics} onChange={updateLyrics}
-          onClick={getCaretPos} onKeyUp={getCaretPos} />
+          value={song.lyrics}
+          type="textarea"
+          placeholder="type song here"
+          onChange={updateLyrics}
+          onClick={getCaretPos}
+          onKeyUp={getCaretPos}></textarea>
       )
     } else {
       const songLyrics = song.lyrics.split('\n');
@@ -196,12 +209,15 @@ const Song = (props) => {
 
   const addChord = (event) => {
     if (event.target.localName !== 'button') return;
-    
+
     const songCopy = { ...song };
     const chord = `[${event.target.textContent}]`;
+    const newCaretPos = caretPos + chord.length;
 
     songCopy.lyrics = `${songCopy.lyrics.slice(0, caretPos)}${chord}${songCopy.lyrics.slice(caretPos)}`;
     setSong(songCopy);
+    setCaretPos(newCaretPos);
+    setNewCaretPos(newCaretPos);
   }
 
   const addRoot = (event) => {
