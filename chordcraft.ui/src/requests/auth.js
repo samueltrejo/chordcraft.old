@@ -14,10 +14,13 @@ import axios from 'axios';
 //   return Promise.reject(err);
 // });
 
-const getCurrentUserJwt = () => firebase
-  .auth()
-  .currentUser.getIdToken()
-  .then(token => sessionStorage.setItem('token', token));
+const getCurrentUserJwt = () => {
+  if (!firebase.auth().currentUser) {
+    return new Promise((resolve) => resolve(null));
+  } else {
+    return firebase.auth().currentUser.getIdToken().then(token => sessionStorage.setItem('token', token));
+  }
+}
 
 axios.interceptors.request.use(
   request => getCurrentUserJwt()

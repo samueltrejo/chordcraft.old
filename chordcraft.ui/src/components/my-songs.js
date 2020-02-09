@@ -12,10 +12,12 @@ const MySongs = (props) => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    songData.getMySongs()
-      .then((songs) => setSongs(songs))
-      .catch(error => console.error(error));
-  }, []);
+    if (props.authed) {
+      songData.getMySongs()
+        .then((songs) => setSongs(songs))
+        .catch(error => console.error(error));
+    }
+  }, [props.authed]);
 
   const buildLibrary = () => {
     return songs.map(song => (

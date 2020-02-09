@@ -77,16 +77,16 @@ const Song = (props) => {
 
   const handleChangeIndex = index => setValue(index);
 
-  useEffect(() => {
-    const songCopy = { ...song }
-    songCopy.ownerId = props.profile.id;
-    songCopy.isOwner = true;
-    if (props.isNew) {
-      setEdit(true);
-      setSong(songCopy);
-    }
-  /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
+  // useEffect(() => {
+  //   const songCopy = { ...song }
+  //   songCopy.ownerId = props.profile.id;
+  //   songCopy.isOwner = true;
+  //   if (props.isNew) {
+  //     setEdit(true);
+  //     setSong(songCopy);
+  //   }
+  // /* eslint-disable react-hooks/exhaustive-deps */
+  // }, []);
 
   const deleteSong = () => {
     songData.deleteSong(song.id)
@@ -444,8 +444,9 @@ const Song = (props) => {
   }
 
   useEffect(() => {
-    if (!props.edit) getSong();
-  }, []);
+    if (props.authed !== null) getSong();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.authed]);
 
   return (
     <div className="song">

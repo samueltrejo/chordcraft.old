@@ -27,24 +27,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.scss';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = props => (authed === false
+  const routeChecker = props => <Component authed={authed} {...props} {...rest} />;
+  return <Route {...rest} render={props => routeChecker(props)} />;
+};
+
+// const PublicRoute = ({ component: Component, authed, ...rest }) => {
+//   const routeChecker = props => (authed === false
+//     ? (<Component authed={authed} {...props} {...rest} />)
+//     : (<Redirect to={{ pathname: '/', state: { from: props.location } }} />));
+//   return <Route {...rest} render={props => routeChecker(props)} />;
+// };
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = props => (authed === true
     ? (<Component authed={authed} {...props} {...rest} />)
     : (<Redirect to={{ pathname: '/', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
-const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = props => (authed === true
-    ? (<Component authed={authed} {...props} {...rest} />)
-    : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }} />));
-  return <Route {...rest} render={props => routeChecker(props)} />;
-};
-
+// console.error('test');
 firebaseInit();
 
 
 function App() {
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(null);
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
@@ -76,17 +82,17 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
+          {/* <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} /> */}
           <PublicRoute path="/login-options" component={LoginOptions} authed={authed} profile={profile} />
           <PrivateRoute path="/profile" component={Profile} authed={authed} profile={profile} />
-          <PrivateRoute path="/song/:id" component={Song} authed={authed} profile={profile} />
-          <PrivateRoute path="/song" component={NewSong} authed={authed} profile={profile} isNew={true} />
-          <PrivateRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
+          <PublicRoute path="/song/:id" component={Song} authed={authed} profile={profile} />
+          <PublicRoute path="/song" component={NewSong} authed={authed} profile={profile} isNew={true} />
+          <PublicRoute path="/song-library" component={SongLibrary} authed={authed} profile={profile} />
           <PrivateRoute path="/my-songs" component={MySongs} authed={authed} profile={profile} />
-          <PrivateRoute path="/getting-started" component={GettingStarted} authed={authed} profile={profile} />
-          <PrivateRoute path="/piano-playground" component={PianoPlayground} authed={authed} profile={profile} />
-          <PrivateRoute path="/" component={Home} authed={authed} profile={profile} />
-          <Route component={NotFound} />
+          <PublicRoute path="/getting-started" component={GettingStarted} authed={authed} profile={profile} />
+          <PublicRoute path="/piano-playground" component={PianoPlayground} authed={authed} profile={profile} />
+          <PublicRoute exact path="/" component={Home} authed={authed} profile={profile} />
+          <PublicRoute component={NotFound} />
         </Switch>
       </Router>
     </div>
