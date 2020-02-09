@@ -36,7 +36,9 @@ const Chord = (props) => {
 
   useEffect(() => {
     const chordLower = props.chord.toLowerCase();
-    chordData.getChordByName(chordLower)
+    const chordConvertHash = chordLower.replace('#', 'b');
+    
+    chordData.getChordByName(chordConvertHash)
       .then(chordData => {
         if (chordData) setChord(chordData);
       })
