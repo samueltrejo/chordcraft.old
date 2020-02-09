@@ -13,10 +13,12 @@ const SongLibrary = (props) => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    songData.getSongs()
-      .then((songs) => setSongs(songs))
-      .catch(error => console.error(error));
-  }, []);
+    if (props.authed !== null) {
+      songData.getSongs()
+        .then((songs) => setSongs(songs))
+        .catch(error => console.error(error));
+    }
+  }, [props.authed]);
 
   const toSongDetails = (songId) => {
     props.history.push(`/song/${songId}`);

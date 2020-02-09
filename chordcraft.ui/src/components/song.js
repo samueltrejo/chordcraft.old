@@ -59,6 +59,7 @@ const Song = (props) => {
   const [edit, setEdit] = useState(false);
   const [chords, setChords] = useState([]);
   const [caretPos, setCaretPos] = useState(0);
+  const [newCaretPos, setNewCaretPos] = useState(0);
   const [modal, setModal] = useState(false);
   // const [newModal, setNewModal] = useState(false);
   const [value, setValue] = useState(0);
@@ -76,16 +77,16 @@ const Song = (props) => {
 
   const handleChangeIndex = index => setValue(index);
 
-  useEffect(() => {
-    const songCopy = { ...song }
-    songCopy.ownerId = props.profile.id;
-    songCopy.isOwner = true;
-    if (props.isNew) {
-      setEdit(true);
-      setSong(songCopy);
-    }
-  /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
+  // useEffect(() => {
+  //   const songCopy = { ...song }
+  //   songCopy.ownerId = props.profile.id;
+  //   songCopy.isOwner = true;
+  //   if (props.isNew) {
+  //     setEdit(true);
+  //     setSong(songCopy);
+  //   }
+  // /* eslint-disable react-hooks/exhaustive-deps */
+  // }, []);
 
   const deleteSong = () => {
     songData.deleteSong(song.id)
@@ -177,14 +178,26 @@ const Song = (props) => {
     }
   }
 
+  useEffect(() => {
+    const songInput = document.getElementById('song-textarea');
+    if (songInput) {
+      songInput.focus();
+      songInput.setSelectionRange(newCaretPos, newCaretPos);
+    }
+  }, [newCaretPos]);
+
   const buildSongLyrics = () => {
     if (edit) {
       return (
         <textarea
+          id="song-textarea"
           className="song-textarea w-100 h-100 p-0"
-          type="textarea" placeholder="type song here"
-          value={song.lyrics} onChange={updateLyrics}
-          onClick={getCaretPos} onKeyUp={getCaretPos} />
+          value={song.lyrics}
+          type="textarea"
+          placeholder="type song here"
+          onChange={updateLyrics}
+          onClick={getCaretPos}
+          onKeyUp={getCaretPos}></textarea>
       )
     } else {
       const songLyrics = song.lyrics.split('\n');
@@ -196,18 +209,30 @@ const Song = (props) => {
 
   const addChord = (event) => {
     if (event.target.localName !== 'button') return;
-    
+
     const songCopy = { ...song };
     const chord = `[${event.target.textContent}]`;
+    const newCaretPos = caretPos + chord.length;
 
     songCopy.lyrics = `${songCopy.lyrics.slice(0, caretPos)}${chord}${songCopy.lyrics.slice(caretPos)}`;
     setSong(songCopy);
+    setCaretPos(newCaretPos);
+    setNewCaretPos(newCaretPos);
   }
 
   const addRoot = (event) => {
     if (event.target.localName !== 'button') return;
-
-    setRoot(event.target.textContent);
+    const value = event.target.textContent;
+    if (value === root) {
+      setRoot('');
+    } else {
+      if ('BE'.includes(value) && sharpFlat === '#') {
+        setSharpFlat('');
+      } else if ('CF'.includes(value) && sharpFlat === 'b') {
+        setSharpFlat('');
+      }
+      setRoot(event.target.textContent);
+    }
   }
 
   const addSharpFlat = (event) => {
@@ -216,6 +241,11 @@ const Song = (props) => {
     if (value === sharpFlat) {
       setSharpFlat('');
     } else {
+      if (value === '#' && 'BE'.includes(root)) {
+        setRoot('');
+      } else if (value === 'b' && 'CF'.includes(root)) {
+        setRoot('');
+      }
       setSharpFlat(event.target.textContent);
     }
   }
@@ -290,12 +320,18 @@ const Song = (props) => {
   }
 
   const saveChord = () => {
-    if (root === '') return;
+    if (root === '' || root === 'Root') return;
 
-    const chordName = `${root.toLowerCase()}${sharpFlat !== '' ? ('b') : ('')}${quality.desc1}${quality.desc2}`;
+    const rootPart = root.toLowerCase();
+    const sharpFlatPart = sharpFlat === '#' ? ('b') : ('');
+    const qualityPart1 = quality.desc1 === 'Quality' ? ('') : (quality.desc1);
+    const qualityPart2 = quality.desc2;
 
+    const chordName = `${rootPart}${sharpFlatPart}${qualityPart1}${qualityPart2}`;
+    
     const chord = chordData.getLocalChord(chordName);
     chord.songId = song.id;
+    console.error(chordName, chord);
 
     chordData.postChord(chord)
       .then(() => {
@@ -408,8 +444,9 @@ const Song = (props) => {
   }
 
   useEffect(() => {
-    if (!props.edit) getSong();
-  }, []);
+    if (props.authed !== null) getSong();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.authed]);
 
   return (
     <div className="song">
